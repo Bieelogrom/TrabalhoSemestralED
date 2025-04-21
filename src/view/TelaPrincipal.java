@@ -9,6 +9,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JLabel;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
+import javax.swing.JButton;
 
 public class TelaPrincipal extends JFrame {
 
@@ -70,6 +71,14 @@ public class TelaPrincipal extends JFrame {
 		JComboBox comboxareaconhecimento = new JComboBox();
 		comboxareaconhecimento.setBounds(12, 142, 324, 26);
 		Cursos.add(comboxareaconhecimento);
+		comboxareaconhecimento.addItem("Ciências Agrárias");
+		comboxareaconhecimento.addItem("Ciências Biológicas");
+		comboxareaconhecimento.addItem("Ciências da Saúde");
+		comboxareaconhecimento.addItem("Ciências Exatas e da Terra");
+		comboxareaconhecimento.addItem("Ciências Sociais Aplicadas");
+		comboxareaconhecimento.addItem("Engenharias");
+		comboxareaconhecimento.addItem("Ciências Humanas");
+		comboxareaconhecimento.addItem("Lingüística, Letras e Artes");
 		
 		txtnomecurso = new JTextField();
 		txtnomecurso.setBounds(12, 86, 324, 26);
@@ -80,6 +89,14 @@ public class TelaPrincipal extends JFrame {
 		txtcodigocurso.setBounds(12, 30, 324, 26);
 		Cursos.add(txtcodigocurso);
 		txtcodigocurso.setColumns(10);
+		
+		JButton btnAdicionarCurso = new JButton("Adicionar curso");
+		btnAdicionarCurso.setBounds(12, 180, 155, 27);
+		Cursos.add(btnAdicionarCurso);
+		
+		JButton btnVisualizarCurso = new JButton("Visualizar cursos");
+		btnVisualizarCurso.setBounds(179, 180, 157, 27);
+		Cursos.add(btnVisualizarCurso);
 		
 		JPanel panel_1 = new JPanel();
 		tabbedPane.addTab("New tab", null, panel_1, null);
