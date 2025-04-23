@@ -10,6 +10,12 @@ import javax.swing.JLabel;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+import java.awt.CardLayout;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.JScrollPane;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class TelaPrincipal extends JFrame {
 
@@ -17,6 +23,7 @@ public class TelaPrincipal extends JFrame {
 	private JPanel contentPane;
 	private JTextField txtnomecurso;
 	private JTextField txtcodigocurso;
+	private JTable table;
 
 	/**
 	 * Launch the application.
@@ -39,18 +46,17 @@ public class TelaPrincipal extends JFrame {
 	 */
 	public TelaPrincipal() {
 		setResizable(false);
-		setTitle("Tela Principal");
+		setTitle("Sistema de Gestão Acadêmica");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 354);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
 		setContentPane(contentPane);
-		contentPane.setLayout(null);
+		contentPane.setLayout(new CardLayout(0, 0));
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.LEFT);
-		tabbedPane.setBounds(0, 0, 450, 310);
-		contentPane.add(tabbedPane);
+		contentPane.add(tabbedPane, "CursosTela");
 		
 		JPanel Cursos = new JPanel();
 		tabbedPane.addTab("Cursos", null, Cursos, null);
@@ -94,7 +100,18 @@ public class TelaPrincipal extends JFrame {
 		btnAdicionarCurso.setBounds(12, 180, 155, 27);
 		Cursos.add(btnAdicionarCurso);
 		
+		//Modificado para melhor compreensão.
+		JPanel VisualizacaoCursos = new JPanel();
+		contentPane.add(VisualizacaoCursos, "VisualizaçãoCursos");
+		VisualizacaoCursos.setLayout(null);
+		
 		JButton btnVisualizarCurso = new JButton("Visualizar cursos");
+		btnVisualizarCurso.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CardLayout cl = (CardLayout) (contentPane.getLayout());
+				cl.show(contentPane, "VisualizaçãoCursos");
+			}
+		});
 		btnVisualizarCurso.setBounds(179, 180, 157, 27);
 		Cursos.add(btnVisualizarCurso);
 		
@@ -103,5 +120,34 @@ public class TelaPrincipal extends JFrame {
 		
 		JPanel panel_2 = new JPanel();
 		tabbedPane.addTab("New tab", null, panel_2, null);
+		
+		
+		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setBounds(12, 51, 416, 249);
+		VisualizacaoCursos.add(scrollPane);
+		
+		table = new JTable();
+		scrollPane.setViewportView(table);
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"ID", "Nome do Curso", "\u00C1rea do Conhecimento"
+			}
+		));
+		table.getColumnModel().getColumn(0).setPreferredWidth(87);
+		table.getColumnModel().getColumn(1).setPreferredWidth(290);
+		table.getColumnModel().getColumn(2).setPreferredWidth(228);
+		
+		JButton btnVoltarCurso = new JButton("Voltar");
+		btnVoltarCurso.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				CardLayout cl = (CardLayout) (contentPane.getLayout());
+				cl.show(contentPane, "CursosTela");
+			}
+		});
+		btnVoltarCurso.setBounds(12, 12, 105, 27);
+		VisualizacaoCursos.add(btnVoltarCurso);
 	}
 }
