@@ -74,17 +74,11 @@ public class TelaPrincipal extends JFrame {
 		lblareadoconhecimento.setBounds(12, 124, 133, 17);
 		Cursos.add(lblareadoconhecimento);
 		
-		JComboBox comboxareaconhecimento = new JComboBox();
+		//Parte modificada para reduzir código.
+		String[] opcoes = {"Ciências Agrárias","Ciências Biológicas","Ciências da Saúde","Ciências Exatas e da Terra","Ciências Sociais Aplicadas","Engenharias","Ciências Humanas","Lingüística, Letras e Artes"}; 
+		JComboBox<String> comboxareaconhecimento = new JComboBox<>(opcoes);
 		comboxareaconhecimento.setBounds(12, 142, 324, 26);
 		Cursos.add(comboxareaconhecimento);
-		comboxareaconhecimento.addItem("Ciências Agrárias");
-		comboxareaconhecimento.addItem("Ciências Biológicas");
-		comboxareaconhecimento.addItem("Ciências da Saúde");
-		comboxareaconhecimento.addItem("Ciências Exatas e da Terra");
-		comboxareaconhecimento.addItem("Ciências Sociais Aplicadas");
-		comboxareaconhecimento.addItem("Engenharias");
-		comboxareaconhecimento.addItem("Ciências Humanas");
-		comboxareaconhecimento.addItem("Lingüística, Letras e Artes");
 		
 		txtnomecurso = new JTextField();
 		txtnomecurso.setBounds(12, 86, 324, 26);
