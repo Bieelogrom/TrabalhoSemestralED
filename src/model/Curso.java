@@ -35,5 +35,9 @@ public class Curso {
 		this.areaConhecimento = areaConhecimento;
 	}
 	
-	
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return "Cód: ["+codigoCurso+"] Nome: ["+nomeCurso+"] Área do Conhecimento: "+areaConhecimento;
+	}
 }

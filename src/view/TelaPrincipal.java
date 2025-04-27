@@ -13,6 +13,9 @@ import javax.swing.JButton;
 import java.awt.CardLayout;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
+import controller.CursoController;
+
 import javax.swing.JScrollPane;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -143,5 +146,10 @@ public class TelaPrincipal extends JFrame {
 		});
 		btnVoltarCurso.setBounds(12, 12, 105, 27);
 		VisualizacaoCursos.add(btnVoltarCurso);
+		
+		CursoController CC = new CursoController(txtcodigocurso, txtcodigocurso, comboxareaconhecimento);
+		
+		
+		btnAdicionarCurso.addActionListener(CC);
 	}
 }
