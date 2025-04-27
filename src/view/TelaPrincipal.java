@@ -147,7 +147,7 @@ public class TelaPrincipal extends JFrame {
 		btnVoltarCurso.setBounds(12, 12, 105, 27);
 		VisualizacaoCursos.add(btnVoltarCurso);
 		
-		CursoController CC = new CursoController(txtcodigocurso, txtcodigocurso, comboxareaconhecimento);
+		CursoController CC = new CursoController(txtnomecurso, txtcodigocurso, comboxareaconhecimento);
 		
 		
 		btnAdicionarCurso.addActionListener(CC);
