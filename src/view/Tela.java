@@ -32,8 +32,9 @@ public class Tela extends JFrame {
 
 	/**
 	 * Create the frame.
+	 * @throws Exception 
 	 */
-	public Tela() {
+	public Tela() throws Exception {
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 652, 412);
@@ -49,7 +50,7 @@ public class Tela extends JFrame {
 	
 		tabbedPane.addTab("Cursos", null, new PainelCursos(), null);
 		tabbedPane.addTab("Disciplinas", null, new PainelDisciplinas(), null);
-		
+		tabbedPane.addTab("Professores", null, new PainelProfessores(), null);
 	}
 
 }
