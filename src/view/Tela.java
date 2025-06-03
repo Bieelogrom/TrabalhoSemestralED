@@ -51,6 +51,7 @@ public class Tela extends JFrame {
 		tabbedPane.addTab("Cursos", null, new PainelCursos(), null);
 		tabbedPane.addTab("Disciplinas", null, new PainelDisciplinas(), null);
 		tabbedPane.addTab("Professores", null, new PainelProfessores(), null);
+		tabbedPane.addTab("Inscrições", null, new PainelInscricoes(), null);
 	}
 
 }

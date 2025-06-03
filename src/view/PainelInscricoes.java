@@ -8,6 +8,7 @@ import javax.swing.JComboBox;
 import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.JScrollPane;
+import javax.swing.table.DefaultTableModel;
 
 public class PainelInscricoes extends JPanel {
 
@@ -30,7 +31,7 @@ public class PainelInscricoes extends JPanel {
 		panel_2.add(panel);
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 		
-		JLabel lblCpfProfessor = new JLabel("Cpf do professor");
+		JLabel lblCpfProfessor = new JLabel("CPF do professor");
 		panel.add(lblCpfProfessor);
 		
 		JComboBox formattedTextField = new JComboBox();
@@ -53,6 +54,23 @@ public class PainelInscricoes extends JPanel {
 		add(scrollPane);
 		
 		table = new JTable();
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"CPF do Professor", "Pontua\u00E7\u00E3o", "Data de inscri\u00E7\u00E3o", "C\u00F3digo da disciplina"
+			}
+		) {
+			boolean[] columnEditables = new boolean[] {
+				true, false, false, false
+			};
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		});
+		table.getColumnModel().getColumn(1).setResizable(false);
+		table.getColumnModel().getColumn(2).setResizable(false);
+		table.getColumnModel().getColumn(3).setResizable(false);
 		scrollPane.setViewportView(table);
 		
 	}
