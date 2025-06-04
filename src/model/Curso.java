@@ -1,21 +1,21 @@
 package model;
 
 public class Curso {
-	private int codigoCurso;
+	private String codigoCurso;
 	private String nomeCurso;
 	private String areaConhecimento;
 	
-	public Curso(int codigoCurso, String nomeCurso, String areaConhecimento) {
+	public Curso(String codigoCurso, String nomeCurso, String areaConhecimento) {
 		this.codigoCurso = codigoCurso;
 		this.nomeCurso = nomeCurso;
 		this.areaConhecimento = areaConhecimento;
 	}
 
-	public int getCodigoCurso() {
+	public String getCodigoCurso() {
 		return codigoCurso;
 	}
 
-	public void setCodigoCurso(int codigoCurso) {
+	public void setCodigoCurso(String codigoCurso) {
 		this.codigoCurso = codigoCurso;
 	}
 

@@ -5,22 +5,29 @@ import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+
+import controller.CursoController;
+
 import javax.swing.JComboBox;
 import java.awt.Component;
 import javax.swing.Box;
 import javax.swing.JButton;
+import javax.swing.SwingConstants;
 
 public class PainelCursos extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private JTextField txtfCodigoCurso;
 	private JTextField txtfNomeCurso;
+	private JComboBox<String> comboxareaconhecimento; 
+	private CursoController cursoController;
 
 	/**
 	 * Create the panel.
 	 */
 	public PainelCursos() {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		
 		
 		Component verticalStrut_1 = Box.createVerticalStrut(20);
 		add(verticalStrut_1);
@@ -34,6 +41,7 @@ public class PainelCursos extends JPanel {
 		panel.add(lblCodigoCurso);
 		
 		txtfCodigoCurso = new JTextField();
+		txtfCodigoCurso.setToolTipText("Digite algo tipo: MAT132 ou AOC110");
 		panel.add(txtfCodigoCurso);
 		txtfCodigoCurso.setColumns(10);
 		
@@ -71,14 +79,14 @@ public class PainelCursos extends JPanel {
 		JPanel panel_3 = new JPanel();
 		add(panel_3);
 		
-		JButton btnSalvarCurso = new JButton("Salvar curso");
+		JButton btnSalvarCurso = new JButton("Cadastrar curso");
 		panel_3.add(btnSalvarCurso);
 		
 		JButton btnVisualizarCursos = new JButton("Visualizar cursos");
 		panel_3.add(btnVisualizarCursos);
 
-		
-		
+		this.cursoController = new CursoController(btnSalvarCurso, txtfCodigoCurso, txtfNomeCurso, comboxareaconhecimento);
+		btnSalvarCurso.addActionListener(cursoController);
 	}
 
 }
