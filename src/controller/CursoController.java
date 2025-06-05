@@ -38,6 +38,7 @@ public class CursoController implements ActionListener {
 		}
 	}
 
+
 	private void cadastrarCurso() {
 		try {
 			String codigoCurso = txtfCodigoCurso.getText();
@@ -59,5 +60,5 @@ public class CursoController implements ActionListener {
 			JOptionPane.showMessageDialog(null, ex.getMessage());
 		}
 	}
-
+	
 }
