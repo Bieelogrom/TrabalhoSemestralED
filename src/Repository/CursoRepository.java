@@ -57,4 +57,17 @@ public class CursoRepository {
 		}
 		return listaDeCursos;
 	}
+	
+	public void remover(Lista<Curso> listaDeCursosAtualizada) throws Exception{
+		String path = System.getProperty("user.home") + File.separator + PASTA;
+		File arq = new File(path, ARQUIVO);
+		FileWriter fw = new FileWriter(arq);
+		PrintWriter pw = new PrintWriter(fw);
+		for(int i = 0; i < listaDeCursosAtualizada.size(); i++) {
+			pw.write(listaDeCursosAtualizada.get(i).toString()+"\r\n");
+		}
+		pw.flush();
+		pw.close();
+		fw.close();
+	}
 }

@@ -70,9 +70,6 @@ public class CursoController implements ActionListener, TableActionEvent {
 		return listaDeCursos;
 	}
 
-	
-	
-	
 	/*
 	 * Métodos especificamente criados para os dois botões de ação na tabela de cursos.
 	 */
@@ -87,15 +84,13 @@ public class CursoController implements ActionListener, TableActionEvent {
 		int deletar = JOptionPane.showConfirmDialog(null, "Deseja excluir?");
 		if(deletar == JOptionPane.YES_OPTION) {
 			try {
-				System.out.println("Teste");
-	            JOptionPane.showMessageDialog(null, "Curso excluído com sucesso!");
+				Lista<Curso> listaDeCursos = listarCursos();
+				listaDeCursos.remove(row);
+				cursoRepository.remover(listaDeCursos);
+				JOptionPane.showMessageDialog(null, "Curso excluído com sucesso!");
 			}catch(Exception e) {
 				e.printStackTrace();
 			}
 		}
-	}
-
-	private void obterCursoLinha(int row) {
-		System.out.println("Oi");
 	}
 }
