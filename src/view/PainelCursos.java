@@ -9,7 +9,12 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+import br.edu.fateczl.Lista;
 import controller.CursoController;
+import model.Curso;
+import view.elementos.TableActionEvent;
+import view.elementos.TableActionCellEditor;
+import view.elementos.TableActionCellRender;
 
 import javax.swing.JComboBox;
 
@@ -111,26 +116,71 @@ public class PainelCursos extends JPanel {
 		JButton btnVisualizarCursos = new JButton("Visualizar cursos");
 		panel_i.add(btnVisualizarCursos);
 		
+	    this.cursoController = new CursoController(btnSalvarCurso, txtfCodigoCurso, txtfNomeCurso, comboxareaconhecimento);
+        btnSalvarCurso.addActionListener(cursoController);
+		
 	    btnVisualizarCursos.addActionListener(e -> {
+	    	try {
+				atualizarTabelaCursos();
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
             cardLayout.show(painelTroca, "tabela");
         });
 		
 		return panel;
 	}
 	
+	private void atualizarTabelaCursos() throws Exception {
+		//Por questões de praticidade deixei o método público no controller mesmo;
+		Lista<Curso> listaDeCursos = cursoController.listarCursos();
+		tableModel.setRowCount(0);
+		while(!listaDeCursos.isEmpty()) {
+			Curso curso = listaDeCursos.get(0);
+			tableModel.addRow(new Object[] {
+					curso.getCodigoCurso(),
+					curso.getNomeCurso(),
+					curso.getAreaConhecimento()
+			});
+			listaDeCursos.removeFirst();
+		}
+	}
+
 	private JTable tabelaCursos;
+	private JTable table;
     private DefaultTableModel tableModel;
 	
     private JPanel tabelaVisualizacao() {
         JPanel panel = new JPanel(new BorderLayout());
-
-        String[] colunas = {"Código", "Nome", "Área"};
-        tableModel = new DefaultTableModel(colunas, 0);
-        tabelaCursos = new JTable(tableModel);
-        tabelaCursos.setEnabled(false);
-
+        
         JScrollPane scrollPane = new JScrollPane(tabelaCursos);
+        scrollPane.setBounds(12, 51, 496, 288);
         panel.add(scrollPane, BorderLayout.CENTER);
+        
+    	table = new JTable();
+		scrollPane.setViewportView(table);
+		table.setModel(new DefaultTableModel(
+			new Object[][] {
+			},
+			new String[] {
+				"ID", "Nome do Curso", "Área do curso", "Opçoes"
+			}
+		) {
+			private static final long serialVersionUID = 1L;
+			boolean[] columnEditables = new boolean[] {
+				false, false, false, true
+			};
+			public boolean isCellEditable(int row, int column) {
+				return columnEditables[column];
+			}
+		});
+		table.setRowHeight(40);
+		tableModel = (DefaultTableModel) table.getModel();
+        
+        TableActionEvent event = cursoController;
+        table.getColumnModel().getColumn(3).setCellRenderer(new TableActionCellRender());
+        table.getColumnModel().getColumn(3).setCellEditor(new TableActionCellEditor(cursoController));
 
         JButton btnVoltar = new JButton("Voltar");
         btnVoltar.addActionListener(e -> cardLayout.show(painelTroca, "formulario"));

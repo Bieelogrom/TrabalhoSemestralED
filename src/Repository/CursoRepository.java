@@ -1,10 +1,14 @@
 package Repository;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
+import br.edu.fateczl.Lista;
 import model.Curso;
 
 public class CursoRepository {
@@ -30,5 +34,27 @@ public class CursoRepository {
 		pw.flush();
 		pw.close();
 		fw.close();
+	}
+	
+	public Lista<Curso> visualizar() throws Exception{
+		Lista<Curso> listaDeCursos = new Lista<>();
+		String path = System.getProperty("user.home") + File.separator + PASTA;
+		File arq = new File(path, ARQUIVO);
+		if(arq.exists() && arq.isFile()) {
+			FileInputStream fis = new FileInputStream(arq);
+			InputStreamReader isr = new InputStreamReader(fis);
+			BufferedReader buffer = new BufferedReader(isr);
+			String linha = buffer.readLine();
+			while(linha != null) {
+				String[] curso = linha.split(";");
+				Curso cursoDaLista = new Curso(curso[0], curso[1], curso[2]);
+				listaDeCursos.addFirst(cursoDaLista);
+				linha = buffer.readLine();
+			}
+			buffer.close();
+			isr.close();
+			fis.close();
+		}
+		return listaDeCursos;
 	}
 }

@@ -8,11 +8,14 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 
 import Repository.CursoRepository;
+import br.edu.fateczl.Lista;
 import model.Curso;
+import view.elementos.TableActionEvent;
 
-public class CursoController implements ActionListener {
+public class CursoController implements ActionListener, TableActionEvent {
 	
 	//Obriga o usuário a digitar o código do curso dentro do padrão.
 	private String patternCodigoCurso = "^[A-Za-z]{3}[0-9]{3}$"; 
@@ -61,4 +64,38 @@ public class CursoController implements ActionListener {
 		}
 	}
 	
+	
+	public Lista<Curso> listarCursos() throws Exception {
+		Lista<Curso> listaDeCursos = cursoRepository.visualizar();
+		return listaDeCursos;
+	}
+
+	
+	
+	
+	/*
+	 * Métodos especificamente criados para os dois botões de ação na tabela de cursos.
+	 */
+	@Override
+	public void onEdit(int row) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onDelete(int row) {
+		int deletar = JOptionPane.showConfirmDialog(null, "Deseja excluir?");
+		if(deletar == JOptionPane.YES_OPTION) {
+			try {
+				System.out.println("Teste");
+	            JOptionPane.showMessageDialog(null, "Curso excluído com sucesso!");
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+
+	private void obterCursoLinha(int row) {
+		System.out.println("Oi");
+	}
 }
