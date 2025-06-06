@@ -13,6 +13,7 @@ import br.edu.fateczl.Lista;
 import controller.CursoController;
 import model.Curso;
 import view.elementos.TableActionEvent;
+import view.elementos.IPainelCursos;
 import view.elementos.TableActionCellEditor;
 import view.elementos.TableActionCellRender;
 
@@ -25,7 +26,7 @@ import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 
-public class PainelCursos extends JPanel {
+public class PainelCursos extends JPanel implements IPainelCursos {
 
 	private static final long serialVersionUID = 1L;
 	private JTextField txtfCodigoCurso;
@@ -116,7 +117,7 @@ public class PainelCursos extends JPanel {
 		JButton btnVisualizarCursos = new JButton("Visualizar cursos");
 		panel_i.add(btnVisualizarCursos);
 		
-	    this.cursoController = new CursoController(btnSalvarCurso, txtfCodigoCurso, txtfNomeCurso, comboxareaconhecimento);
+	    this.cursoController = new CursoController(btnSalvarCurso, txtfCodigoCurso, txtfNomeCurso, comboxareaconhecimento, this);
         btnSalvarCurso.addActionListener(cursoController);
 		
 	    btnVisualizarCursos.addActionListener(e -> {
@@ -188,5 +189,15 @@ public class PainelCursos extends JPanel {
 
         return panel;
     }
+
+
+	@Override
+	public void atualizarTabela() {
+		try {
+			atualizarTabelaCursos();
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+		}
+	}
 
 }

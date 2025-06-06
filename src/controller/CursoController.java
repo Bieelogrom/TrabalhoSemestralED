@@ -13,6 +13,8 @@ import javax.swing.table.DefaultTableModel;
 import Repository.CursoRepository;
 import br.edu.fateczl.Lista;
 import model.Curso;
+import view.PainelCursos;
+import view.elementos.IPainelCursos;
 import view.elementos.TableActionEvent;
 
 public class CursoController implements ActionListener, TableActionEvent {
@@ -24,13 +26,15 @@ public class CursoController implements ActionListener, TableActionEvent {
 	private JTextField txtfNomeCurso;
 	private JComboBox<String> comboxareaconhecimento;
 	private CursoRepository cursoRepository;
+	private IPainelCursos callback;
 	
-	public CursoController(JButton btnSalvarCurso, JTextField txtfCodigoCurso, JTextField txtfNomeCurso, JComboBox<String> comboxareaconhecimento) {
+	public CursoController(JButton btnSalvarCurso, JTextField txtfCodigoCurso, JTextField txtfNomeCurso, JComboBox<String> comboxareaconhecimento, IPainelCursos callback) {
 		this.btnSalvarCurso = btnSalvarCurso;
 		this.txtfCodigoCurso = txtfCodigoCurso;
 		this.txtfNomeCurso = txtfNomeCurso;
 		this.comboxareaconhecimento = comboxareaconhecimento;
 		this.cursoRepository = new CursoRepository();
+		this.callback = callback;
 	}
 
 	@Override
@@ -87,10 +91,12 @@ public class CursoController implements ActionListener, TableActionEvent {
 				Lista<Curso> listaDeCursos = listarCursos();
 				listaDeCursos.remove(row);
 				cursoRepository.remover(listaDeCursos);
+				callback.atualizarTabela();
 				JOptionPane.showMessageDialog(null, "Curso excluído com sucesso!");
 			}catch(Exception e) {
 				e.printStackTrace();
 			}
 		}
 	}
+	
 }
