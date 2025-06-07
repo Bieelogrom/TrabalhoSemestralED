@@ -11,12 +11,17 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 import Repository.CursoRepository;
+import Repository.DisciplinaRepository;
 import br.edu.fateczl.Lista;
 import model.Curso;
+import model.Disciplina;
 import view.PainelCursos;
 import view.elementos.IPainelCursos;
 import view.elementos.TableActionEvent;
 
+/*
+ * daqui em diante é basicamente copiar e colar as lógicas.
+ */
 public class CursoController implements ActionListener, TableActionEvent {
 	
 	//Obriga o usuário a digitar o código do curso dentro do padrão.
@@ -27,6 +32,7 @@ public class CursoController implements ActionListener, TableActionEvent {
 	private JComboBox<String> comboxareaconhecimento;
 	private CursoRepository cursoRepository;
 	private IPainelCursos callback;
+	private DisciplinaController disciplinaController;
 	
 	public CursoController(JButton btnSalvarCurso, JTextField txtfCodigoCurso, JTextField txtfNomeCurso, JComboBox<String> comboxareaconhecimento, IPainelCursos callback) {
 		this.btnSalvarCurso = btnSalvarCurso;
@@ -34,6 +40,7 @@ public class CursoController implements ActionListener, TableActionEvent {
 		this.txtfNomeCurso = txtfNomeCurso;
 		this.comboxareaconhecimento = comboxareaconhecimento;
 		this.cursoRepository = new CursoRepository();
+		this.disciplinaController = new DisciplinaController();
 		this.callback = callback;
 	}
 
@@ -130,6 +137,8 @@ public class CursoController implements ActionListener, TableActionEvent {
 		if(deletar == JOptionPane.YES_OPTION) {
 			try {
 				Lista<Curso> listaDeCursos = listarCursos();
+				Curso cursoASerApagado = listaDeCursos.get(row);
+				verificaDisciplinasVinculadas(cursoASerApagado);
 				listaDeCursos.remove(row);
 				cursoRepository.remover(listaDeCursos);
 				callback.atualizarTabela();
@@ -138,6 +147,22 @@ public class CursoController implements ActionListener, TableActionEvent {
 				e.printStackTrace();
 			}
 		}
+	}
+
+	/*
+	 * Método somente para fazer remoção da disciplina vinculada ao curso apagado.
+	 * Código extremamente mirabolante, mas provavelmente nem segue boas práticas.
+	 */
+	private void verificaDisciplinasVinculadas(Curso cursoASerApagado) throws Exception {
+		Lista<Disciplina> listaDeDisciplinas = disciplinaController.listarDisciplinas();
+		for(int i = 0; i < listaDeDisciplinas.size(); i++) {
+			Disciplina disciplina = listaDeDisciplinas.get(i);
+			if(cursoASerApagado.getNomeCurso().equals(disciplina.getCurso())) {
+				listaDeDisciplinas.remove(i);
+				i--;
+			}
+		}
+		disciplinaController.getDisciplinaRepository().remover(listaDeDisciplinas);
 	}
 	
 }

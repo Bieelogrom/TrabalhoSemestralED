@@ -42,6 +42,11 @@ public class DisciplinaController implements ActionListener, TableActionEvent  {
 		this.disciplinaRepository = new DisciplinaRepository();
 	}
 	
+	public DisciplinaController() {
+		this.cursoRepository = new CursoRepository();
+		this.disciplinaRepository = new DisciplinaRepository();
+	}
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		String cmd = e.getActionCommand();
@@ -87,9 +92,17 @@ public class DisciplinaController implements ActionListener, TableActionEvent  {
 		}
 	}
 
+
+	//Esse método está aqui para carregar o combobox de cursos.
 	public Lista<Curso> listarCursos() throws Exception {
 		Lista<Curso> listaDeCursos = cursoRepository.visualizar();
 		return listaDeCursos;
+	}
+	
+	//Esse método está aqui para uso geral e também carregar a tabela de visualização.
+	public Lista<Disciplina> listarDisciplinas() throws Exception {
+		Lista<Disciplina> listaDeDisciplinas = disciplinaRepository.visualizar();
+		return listaDeDisciplinas;
 	}
 
 	@Override
@@ -100,7 +113,21 @@ public class DisciplinaController implements ActionListener, TableActionEvent  {
 
 	@Override
 	public void onDelete(int row) {
-		// TODO Auto-generated method stub
-		
+		int deletar = JOptionPane.showConfirmDialog(null, "Deseja excluir?");
+		if(deletar == JOptionPane.YES_OPTION) {
+			try {
+				Lista<Disciplina> listaDeDisciplinas = listarDisciplinas();
+				listaDeDisciplinas.remove(row);
+				disciplinaRepository.remover(listaDeDisciplinas);
+				callback.atualizarTabela();
+				JOptionPane.showMessageDialog(null, "Disciplina excluído com sucesso!");
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	public DisciplinaRepository getDisciplinaRepository() {
+		return this.disciplinaRepository;
 	}
 }

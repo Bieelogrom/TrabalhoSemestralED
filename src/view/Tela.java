@@ -49,8 +49,9 @@ public class Tela extends JFrame {
 		contentPane.add(tabbedPane);
 		
 		PainelDisciplinas painelDisciplinas = new PainelDisciplinas();
+		PainelCursos painelCursos = new PainelCursos();
 	
-		tabbedPane.addTab("Cursos", null, new PainelCursos(), null);
+		tabbedPane.addTab("Cursos", null, painelCursos, null);
 		tabbedPane.addTab("Disciplinas", null, painelDisciplinas, null);
 		tabbedPane.addTab("Professores", null, new PainelProfessores(), null);
 		tabbedPane.addTab("Inscrições", null, new PainelInscricoes(), null);
@@ -63,7 +64,17 @@ public class Tela extends JFrame {
 			int selectedIndex = tabbedPane.getSelectedIndex();
 			String tabTitle = tabbedPane.getTitleAt(selectedIndex);
 			if ("Disciplinas".equals(tabTitle)) {
+				//Quando o usuário abrir a aba de disciplinas vai rodar o método abaixo
 				painelDisciplinas.atualizarComboBoxCursos(); 
+			}
+			if("Cursos".equals(tabTitle)) {
+				try {
+					//Quando o usuário apagar o curso então atualizada os itens de disciplina
+					painelDisciplinas.atualizarTabela();
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 	}

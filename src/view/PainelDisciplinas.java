@@ -18,6 +18,7 @@ import br.edu.fateczl.Lista;
 import controller.CursoController;
 import controller.DisciplinaController;
 import model.Curso;
+import model.Disciplina;
 import view.elementos.IPainelDisciplinas;
 import view.elementos.TableActionCellEditor;
 import view.elementos.TableActionCellRender;
@@ -178,8 +179,15 @@ public class PainelDisciplinas extends JPanel implements IPainelDisciplinas {
 		panel_7.add(btnVisualizarDisciplinas);
 		
 		btnVisualizarDisciplinas.addActionListener(e -> {
+			try {
+				atualizarTabela();
+			}catch(Exception e1) {
+				System.err.println(e1.getMessage());
+			}
 			cardLayout.show(painelTroca, "tabela");
 		});
+		
+		
 		
 		btnCadastrarNovaDisciplina.addActionListener(disciplinaController);
 		
@@ -233,9 +241,18 @@ public class PainelDisciplinas extends JPanel implements IPainelDisciplinas {
 	 * Métodos de callback
 	 */
 	@Override
-	public void atualizarTabela() {
-		// TODO Auto-generated method stub
-		
+	public void atualizarTabela() throws Exception {
+		Lista<Disciplina> listaDeDisciplinas = disciplinaController.listarDisciplinas();
+		tableModel.setRowCount(0);
+		while(!listaDeDisciplinas.isEmpty()) {
+			Disciplina disciplina = listaDeDisciplinas.get(0);
+			tableModel.addRow(new Object[] {
+				disciplina.getCodigoDisciplina(),
+				disciplina.getNomeDisciplina(),
+				disciplina.getCurso()
+			});
+			listaDeDisciplinas.removeFirst();
+		}
 	}
 
 
