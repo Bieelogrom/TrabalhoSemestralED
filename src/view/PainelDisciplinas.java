@@ -3,6 +3,7 @@ package view;
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Component;
+import java.text.ParseException;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -11,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.MaskFormatter;
 
 import br.edu.fateczl.Lista;
 import controller.CursoController;
@@ -26,6 +28,7 @@ import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
 
 public class PainelDisciplinas extends JPanel implements IPainelDisciplinas {
 
@@ -37,11 +40,13 @@ public class PainelDisciplinas extends JPanel implements IPainelDisciplinas {
 	private DisciplinaController disciplinaController;
 	private CardLayout cardLayout;
 	private JPanel painelTroca;
+	private JFormattedTextField formattedTextField;
 	/**
 	 * Create the panel.
+	 * @throws ParseException 
 	 */
 	
-	public PainelDisciplinas() {
+	public PainelDisciplinas() throws ParseException {
 	      setLayout(new BorderLayout());
 	       setBorder(new EmptyBorder(10, 10, 10, 10));
 
@@ -59,7 +64,7 @@ public class PainelDisciplinas extends JPanel implements IPainelDisciplinas {
 	}
 	
 	
-	public JPanel formularioCadastroDisciplinas() {
+	public JPanel formularioCadastroDisciplinas() throws ParseException {
 		JPanel panelP = new JPanel();
 		panelP.setLayout(new BoxLayout(panelP, BoxLayout.Y_AXIS));
 		Component verticalStrut = Box.createVerticalStrut(20);
@@ -115,8 +120,8 @@ public class PainelDisciplinas extends JPanel implements IPainelDisciplinas {
 		JComboBox<String> comboboxdiasemana = new JComboBox<>(opcoes);
 		panel_1.add(comboboxdiasemana);
 		
-		Component horizontalStrut = Box.createHorizontalStrut(120);
-		panel.add(horizontalStrut);
+		Component horizontalStrut_1 = Box.createHorizontalStrut(20);
+		panel.add(horizontalStrut_1);
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -129,6 +134,7 @@ public class PainelDisciplinas extends JPanel implements IPainelDisciplinas {
 		txtfQuantidadeHoras = new JTextField();
 		panel_2.add(txtfQuantidadeHoras);
 		txtfQuantidadeHoras.setColumns(10);
+		
 		
 		JPanel panel_6 = new JPanel();
 		panel_5.add(panel_6);
@@ -149,7 +155,21 @@ public class PainelDisciplinas extends JPanel implements IPainelDisciplinas {
 		JPanel panel_7 = new JPanel();
 		panel_6.add(panel_7);
 		
-		this.disciplinaController = new DisciplinaController(this);
+		
+		Component horizontalStrut = Box.createHorizontalStrut(20);
+		panel.add(horizontalStrut);
+		
+		JPanel panel_8 = new JPanel();
+		panel.add(panel_8);
+		panel_8.setLayout(new BoxLayout(panel_8, BoxLayout.Y_AXIS));
+		
+		JLabel lblHorrioDaDisciplina = new JLabel("Horário da disciplina");
+		panel_8.add(lblHorrioDaDisciplina);
+		
+		formattedTextField = new JFormattedTextField(new MaskFormatter("##:##/##:##"));
+		panel_8.add(formattedTextField);
+		
+		this.disciplinaController = new DisciplinaController(this, textField, textField_1, comboboxdiasemana, txtfQuantidadeHoras, comboboxCursos, formattedTextField);
 		
 		JButton btnCadastrarNovaDisciplina = new JButton("Cadastrar nova disciplina");
 		panel_7.add(btnCadastrarNovaDisciplina);
@@ -160,6 +180,8 @@ public class PainelDisciplinas extends JPanel implements IPainelDisciplinas {
 		btnVisualizarDisciplinas.addActionListener(e -> {
 			cardLayout.show(painelTroca, "tabela");
 		});
+		
+		btnCadastrarNovaDisciplina.addActionListener(disciplinaController);
 		
 		return panelP;
 	}
@@ -207,6 +229,9 @@ public class PainelDisciplinas extends JPanel implements IPainelDisciplinas {
 	}
 
 
+	/*
+	 * Métodos de callback
+	 */
 	@Override
 	public void atualizarTabela() {
 		// TODO Auto-generated method stub
@@ -216,8 +241,10 @@ public class PainelDisciplinas extends JPanel implements IPainelDisciplinas {
 
 	@Override
 	public void limparTextos() {
-		// TODO Auto-generated method stub
-		
+		textField.setText("");
+		textField_1.setText("");
+		txtfQuantidadeHoras.setText("");
+		formattedTextField.setText("");
 	}
 
 	@Override

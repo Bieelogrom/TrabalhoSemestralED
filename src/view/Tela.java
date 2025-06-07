@@ -55,6 +55,10 @@ public class Tela extends JFrame {
 		tabbedPane.addTab("Professores", null, new PainelProfessores(), null);
 		tabbedPane.addTab("Inscrições", null, new PainelInscricoes(), null);
 		
+		
+		/*
+		 * Tentando ao máximo não juntar lógica de view com a de controller
+		 */
 		tabbedPane.addChangeListener(e -> {
 			int selectedIndex = tabbedPane.getSelectedIndex();
 			String tabTitle = tabbedPane.getTitleAt(selectedIndex);

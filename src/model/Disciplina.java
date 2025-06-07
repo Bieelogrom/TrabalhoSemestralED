@@ -1,17 +1,15 @@
 package model;
 
-import java.time.LocalTime;
-
 public class Disciplina {
-	private int codigoDisciplina;
+	private String codigoDisciplina;
 	private String nomeDisciplina;
 	private String diaDaSemanaDisciplina;
-	private LocalTime horarioDisciplina;
+	private String horarioDisciplina;
 	private int quantidadeHorasDisciplina;
-	private Curso curso;
+	private String curso;
 	
-	public Disciplina(int codigoDisciplina, String nomeDisciplina, String diaDaSemanaDisciplina,
-			LocalTime horarioDisciplina, int quantidadeHorasDisciplina, Curso curso) {
+	public Disciplina(String codigoDisciplina, String nomeDisciplina, String diaDaSemanaDisciplina,
+			String horarioDisciplina, int quantidadeHorasDisciplina, String curso) {
 		this.codigoDisciplina = codigoDisciplina;
 		this.nomeDisciplina = nomeDisciplina;
 		this.diaDaSemanaDisciplina = diaDaSemanaDisciplina;
@@ -20,11 +18,11 @@ public class Disciplina {
 		this.curso = curso;
 	}
 
-	public int getCodigoDisciplina() {
+	public String getCodigoDisciplina() {
 		return codigoDisciplina;
 	}
 
-	public void setCodigoDisciplina(int codigoDisciplina) {
+	public void setCodigoDisciplina(String codigoDisciplina) {
 		this.codigoDisciplina = codigoDisciplina;
 	}
 
@@ -44,12 +42,12 @@ public class Disciplina {
 		this.diaDaSemanaDisciplina = diaDaSemanaDisciplina;
 	}
 
-	public LocalTime getHorarioDisciplina() {
+	public String getHorarioDisciplina() {
 		return horarioDisciplina;
 	}
 
 	public void setHorarioDisciplina(String horarioDisciplina) {
-		this.horarioDisciplina = LocalTime.parse(horarioDisciplina);
+		this.horarioDisciplina = horarioDisciplina;
 	}
 
 	public int getQuantidadeHorasDisciplina() {
@@ -60,11 +58,19 @@ public class Disciplina {
 		this.quantidadeHorasDisciplina = quantidadeHorasDisciplina;
 	}
 
-	public Curso getCurso() {
+	public String getCurso() {
 		return curso;
 	}
 
-	public void setCurso(Curso curso) {
+	public void setCurso(String curso) {
 		this.curso = curso;
+	}
+
+	@Override
+	public String toString() {
+		return codigoDisciplina+";"+nomeDisciplina+";"+diaDaSemanaDisciplina+";"+horarioDisciplina
+				+";"+quantidadeHorasDisciplina+";"+curso;
 	} 
+	
+	
 }
