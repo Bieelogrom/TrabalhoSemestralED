@@ -191,6 +191,9 @@ public class PainelCursos extends JPanel implements IPainelCursos {
     }
 
 
+    /*
+     * Métodos de callback. Ainda aprendendo implementação.
+     */
 	@Override
 	public void atualizarTabela() {
 		try {
@@ -198,6 +201,14 @@ public class PainelCursos extends JPanel implements IPainelCursos {
 		} catch (Exception e) {
 			System.err.println(e.getMessage());
 		}
+	}
+
+
+	@Override
+	public void limparTextos() {
+		// TODO Auto-generated method stub
+		txtfCodigoCurso.setText("");;
+		txtfNomeCurso.setText("");
 	}
 
 }
