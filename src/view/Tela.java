@@ -47,11 +47,21 @@ public class Tela extends JFrame {
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		tabbedPane.setBounds(12, 12, 628, 351);
 		contentPane.add(tabbedPane);
+		
+		PainelDisciplinas painelDisciplinas = new PainelDisciplinas();
 	
 		tabbedPane.addTab("Cursos", null, new PainelCursos(), null);
-		tabbedPane.addTab("Disciplinas", null, new PainelDisciplinas(), null);
+		tabbedPane.addTab("Disciplinas", null, painelDisciplinas, null);
 		tabbedPane.addTab("Professores", null, new PainelProfessores(), null);
 		tabbedPane.addTab("Inscrições", null, new PainelInscricoes(), null);
+		
+		tabbedPane.addChangeListener(e -> {
+			int selectedIndex = tabbedPane.getSelectedIndex();
+			String tabTitle = tabbedPane.getTitleAt(selectedIndex);
+			if ("Disciplinas".equals(tabTitle)) {
+				painelDisciplinas.atualizarComboBoxCursos(); 
+			}
+		});
 	}
 
 }

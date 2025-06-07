@@ -70,7 +70,6 @@ public class CursoController implements ActionListener, TableActionEvent {
 	
 	}
 	
-	
 	public Lista<Curso> listarCursos() throws Exception {
 		Lista<Curso> listaDeCursos = cursoRepository.visualizar();
 		return listaDeCursos;

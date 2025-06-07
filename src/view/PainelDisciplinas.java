@@ -1,5 +1,7 @@
 package view;
 
+import java.awt.BorderLayout;
+import java.awt.CardLayout;
 import java.awt.Component;
 
 import javax.swing.Box;
@@ -8,27 +10,63 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
+
+import br.edu.fateczl.Lista;
+import controller.CursoController;
+import controller.DisciplinaController;
+import model.Curso;
+import view.elementos.IPainelDisciplinas;
+import view.elementos.TableActionCellEditor;
+import view.elementos.TableActionCellRender;
+import view.elementos.TableActionEvent;
+
 import javax.swing.JComboBox;
 import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JButton;
 
-public class PainelDisciplinas extends JPanel {
+public class PainelDisciplinas extends JPanel implements IPainelDisciplinas {
 
 	private static final long serialVersionUID = 1L;
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField txtfQuantidadeHoras;
-
+	private JComboBox<String> comboboxCursos;
+	private DisciplinaController disciplinaController;
+	private CardLayout cardLayout;
+	private JPanel painelTroca;
 	/**
 	 * Create the panel.
 	 */
+	
 	public PainelDisciplinas() {
-		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+	      setLayout(new BorderLayout());
+	       setBorder(new EmptyBorder(10, 10, 10, 10));
+
+	       cardLayout = new CardLayout();
+	       painelTroca = new JPanel(cardLayout);
+	       add(painelTroca, BorderLayout.CENTER);
+
+	       JPanel painelFormulario = formularioCadastroDisciplinas();
+	       JPanel painelTabela = tabelaVisualizacao();
+
+	       painelTroca.add(painelFormulario, "formulario");
+	       painelTroca.add(painelTabela, "tabela");
+
+	       cardLayout.show(painelTroca, "formulario");
+	}
+	
+	
+	public JPanel formularioCadastroDisciplinas() {
+		JPanel panelP = new JPanel();
+		panelP.setLayout(new BoxLayout(panelP, BoxLayout.Y_AXIS));
 		Component verticalStrut = Box.createVerticalStrut(20);
-		add(verticalStrut);
+		panelP.add(verticalStrut);
 		
 		JPanel panel_5 = new JPanel();
-		add(panel_5);
+		panelP.add(panel_5);
 		panel_5.setLayout(new BoxLayout(panel_5, BoxLayout.Y_AXIS));
 		setBorder(new EmptyBorder(0, 20, 0, 20));
 		
@@ -102,8 +140,8 @@ public class PainelDisciplinas extends JPanel {
 		JLabel lblCurso = new JLabel("Curso");
 		panel_6.add(lblCurso);
 		
-		JComboBox comboBox_1 = new JComboBox();
-		panel_6.add(comboBox_1);
+		comboboxCursos = new JComboBox<>();
+		panel_6.add(comboboxCursos);
 		
 		Component verticalStrut_4 = Box.createVerticalStrut(20);
 		panel_6.add(verticalStrut_4);
@@ -111,12 +149,87 @@ public class PainelDisciplinas extends JPanel {
 		JPanel panel_7 = new JPanel();
 		panel_6.add(panel_7);
 		
+		this.disciplinaController = new DisciplinaController(this);
+		
 		JButton btnCadastrarNovaDisciplina = new JButton("Cadastrar nova disciplina");
 		panel_7.add(btnCadastrarNovaDisciplina);
 		
 		JButton btnVisualizarDisciplinas = new JButton("Visualizar disciplinas");
 		panel_7.add(btnVisualizarDisciplinas);
 		
+		btnVisualizarDisciplinas.addActionListener(e -> {
+			cardLayout.show(painelTroca, "tabela");
+		});
+		
+		return panelP;
+	}
+	
+	private JTable tabelaCursos;
+	private JTable table;
+    private DefaultTableModel tableModel;
+
+	private JPanel tabelaVisualizacao() {
+		JPanel panel = new JPanel(new BorderLayout());
+	        
+	    JScrollPane scrollPane = new JScrollPane(tabelaCursos);
+	    scrollPane.setBounds(12, 51, 496, 288);
+	    panel.add(scrollPane, BorderLayout.CENTER);
+	        
+	    table = new JTable();
+		scrollPane.setViewportView(table);
+			table.setModel(new DefaultTableModel(
+				new Object[][] {
+				},
+				new String[] {
+					"ID", "Nome da disciplina", "Curso da disciplina", "Opçoes"
+				}
+			) {
+				private static final long serialVersionUID = 1L;
+				boolean[] columnEditables = new boolean[] {
+					false, false, false, true
+				};
+				public boolean isCellEditable(int row, int column) {
+					return columnEditables[column];
+				}
+			});
+			table.setRowHeight(40);
+			tableModel = (DefaultTableModel) table.getModel();
+	        
+	        TableActionEvent event = disciplinaController;
+	        table.getColumnModel().getColumn(3).setCellRenderer(new TableActionCellRender());
+	        table.getColumnModel().getColumn(3).setCellEditor(new TableActionCellEditor(disciplinaController));
+
+	        JButton btnVoltar = new JButton("Voltar");
+	        btnVoltar.addActionListener(e -> cardLayout.show(painelTroca, "formulario"));
+	        panel.add(btnVoltar, BorderLayout.SOUTH);
+
+	        return panel;
 	}
 
+
+	@Override
+	public void atualizarTabela() {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void limparTextos() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void atualizarComboBoxCursos() {
+		try {
+			comboboxCursos.removeAllItems(); 
+			Lista<Curso> listaDeCursos = disciplinaController.listarCursos();
+			for(int i = 0; i < listaDeCursos.size(); i++) {
+				comboboxCursos.addItem(listaDeCursos.get(i).getNomeCurso());
+			}
+		} catch (Exception e) {
+			System.err.println(e.getMessage());
+		}
+	}
 }
