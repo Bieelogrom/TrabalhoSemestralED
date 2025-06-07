@@ -8,6 +8,7 @@ import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.text.MaskFormatter;
 
 import Repository.CursoRepository;
 import Repository.DisciplinaRepository;
@@ -107,8 +108,73 @@ public class DisciplinaController implements ActionListener, TableActionEvent  {
 
 	@Override
 	public void onEdit(int row) {
-		// TODO Auto-generated method stub
-		
+		int editar = JOptionPane.showConfirmDialog(null, "Deseja editar?");
+		if(editar == JOptionPane.YES_OPTION) {
+			try {
+				Lista<Disciplina> listaDeDisciplinas = listarDisciplinas();
+				Disciplina disciplina = listaDeDisciplinas.get(row);
+				
+				String[] opcoesSemana = {"Segunda-feira","Terça-feira","Quarta-feira","Quinta-feira","Sexta-feira","Sábado"};
+				
+				Lista<Curso> listaDeCursos = listarCursos();
+				String[] cursosNome = new String[listaDeCursos.size()];
+				for(int i = 0; i < listaDeCursos.size(); i++) {
+					cursosNome[i] = listaDeCursos.get(i).getNomeCurso();
+				}
+				
+				/*
+				 * Conforme projeto vai crescendo o código vai ficando mais complexo;
+				 */
+				String codigoDisciplina = JOptionPane.showInputDialog(null,"Digite o código da disciplina",disciplina.getCodigoDisciplina());
+				if(codigoDisciplina == null) return;
+				
+				String nomeDisciplina = JOptionPane.showInputDialog(null,"Digite o nome da disciplina",disciplina.getNomeDisciplina());
+				if(nomeDisciplina == null) return;
+				
+				JComboBox<String> comboSemana = new JComboBox<>(opcoesSemana);
+				comboSemana.setSelectedItem(disciplina.getDiaDaSemanaDisciplina());
+				int diaDaSemanaResultado = JOptionPane.showConfirmDialog(null, comboSemana, "Selecione o dia da semana", JOptionPane.OK_CANCEL_OPTION);
+				if (diaDaSemanaResultado != JOptionPane.OK_OPTION) return;
+				
+				/*
+				 * KKKKKKKKKKKKKKKKKKKKKK
+				 */
+				int horasDisciplina;
+				try {
+					horasDisciplina = Integer.parseInt(JOptionPane.showInputDialog(null,"Digite a carga horária da disciplina",disciplina.getQuantidadeHorasDisciplina()));
+				}catch(NumberFormatException e) {
+					throw new IllegalArgumentException("Digite apenas números no campo 'Quantidade de Horas'.");
+				}
+				
+				String horarioDisciplinav;
+				JFormattedTextField horarioDisciplina = new JFormattedTextField(new MaskFormatter("##:##/##:##"));
+				int option = JOptionPane.showConfirmDialog(null,horarioDisciplina,"Digite o horário da disciplina",JOptionPane.OK_CANCEL_OPTION);
+				horarioDisciplinav = horarioDisciplina.getText();
+				if (option != JOptionPane.OK_OPTION) return;
+					
+				
+				JComboBox<String> comboCurso = new JComboBox<>(cursosNome);
+				comboCurso.setSelectedItem(disciplina.getCurso());
+				int cursoNome = JOptionPane.showConfirmDialog(null, comboCurso, "Selecione o curso da disciplina", JOptionPane.OK_CANCEL_OPTION);
+				if (cursoNome != JOptionPane.OK_OPTION) return;
+				
+				listaDeDisciplinas.remove(row);
+				disciplinaRepository.remover(listaDeDisciplinas);
+
+				disciplina.setCodigoDisciplina(codigoDisciplina);
+				disciplina.setNomeDisciplina(nomeDisciplina);
+				disciplina.setDiaDaSemanaDisciplina((String) comboSemana.getSelectedItem());
+				disciplina.setQuantidadeHorasDisciplina(horasDisciplina);
+				disciplina.setHorarioDisciplina(horarioDisciplinav);
+				disciplina.setCurso((String) comboCurso.getSelectedItem());
+				
+				disciplinaRepository.salvar(disciplina);
+				callback.atualizarTabela();
+				JOptionPane.showMessageDialog(null, "Disciplina editada com sucesso!");
+			}catch(Exception ex) {
+				JOptionPane.showMessageDialog(null, ex.getMessage());
+			}
+		}
 	}
 
 	@Override
