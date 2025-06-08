@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 import Repository.ProfessorRepository;
+import br.edu.fateczl.fila.Fila;
 import model.Professor;
 import view.elementos.TableActionEvent;
 
@@ -51,13 +52,18 @@ public class ProfessorController implements ActionListener, TableActionEvent {
 			
 			Professor novoProfessor = new Professor(cpf,nome,area,pontuacaoP);
 			professorRepository.salvar(novoProfessor);
-			//System.out.println(cpf+nome+area+pontuacaoP);
+
 			JOptionPane.showMessageDialog(null, "Professor cadastrado com sucesso!");
 		}catch(IllegalArgumentException ex) {
 			JOptionPane.showMessageDialog(null, ex.getMessage());
 		} catch (IOException ex) {
 			JOptionPane.showMessageDialog(null, ex.getMessage());
 		}
+	}
+	
+	public Fila<Professor> enfileirarProfessores() throws IOException{
+		Fila<Professor> filaDeProfessores = professorRepository.visualizar();
+		return filaDeProfessores;
 	}
 
 	@Override

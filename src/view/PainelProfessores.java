@@ -19,7 +19,11 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
 
+import br.edu.fateczl.fila.Fila;
 import controller.ProfessorController;
+import model.Curso;
+import model.Professor;
+import view.elementos.IPainelProfessores;
 import view.elementos.TableActionCellEditor;
 import view.elementos.TableActionCellRender;
 import view.elementos.TableActionEvent;
@@ -27,7 +31,7 @@ import view.elementos.TableActionEvent;
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 
-public class PainelProfessores extends JPanel {
+public class PainelProfessores extends JPanel implements IPainelProfessores {
 
 	private static final long serialVersionUID = 1L;
 	private JFormattedTextField txtfCpfProfessor;
@@ -137,10 +141,30 @@ public class PainelProfessores extends JPanel {
 		btnCadastrarProfessor.addActionListener(professorController);
 		
 		btnVisualizarProfessores.addActionListener(e -> {
+			try {
+				atualizarTabelaProfessores();
+			}catch(Exception ex) {
+				// TODO Auto-generated catch block
+				ex.printStackTrace();
+			}
 			cardLayout.show(painelTroca, "tabela");
 		});
 		
 		return panelP;
+	}
+	
+	private void atualizarTabelaProfessores() throws Exception {
+		Fila<Professor> filaDeProfessores =	professorController.enfileirarProfessores();
+		tableModel.setRowCount(0);
+		while(!filaDeProfessores.isEmpty()) {
+			Professor novoProfessor = filaDeProfessores.remove();
+			tableModel.addRow(new Object[] {
+					novoProfessor.getCpf(),
+					novoProfessor.getNome(),
+					novoProfessor.getArea(),
+					novoProfessor.getPontuacao()
+			});
+		}
 	}
 	
 	private JTable tabelaCursos;
@@ -175,13 +199,24 @@ public class PainelProfessores extends JPanel {
 			tableModel = (DefaultTableModel) table.getModel();
 	        
 	        TableActionEvent event = professorController;
-	        table.getColumnModel().getColumn(3).setCellRenderer(new TableActionCellRender());
-	        table.getColumnModel().getColumn(3).setCellEditor(new TableActionCellEditor(professorController));
+	        table.getColumnModel().getColumn(4).setCellRenderer(new TableActionCellRender());
+	        table.getColumnModel().getColumn(4).setCellEditor(new TableActionCellEditor(professorController));
 
 	        JButton btnVoltar = new JButton("Voltar");
 	        btnVoltar.addActionListener(e -> cardLayout.show(painelTroca, "formulario"));
 	        panel.add(btnVoltar, BorderLayout.SOUTH);
 
 	        return panel;
+	}
+
+	@Override
+	public void atualizarTabela() {
+		
+	}
+
+	@Override
+	public void limparTextos() {
+		// TODO Auto-generated method stub
+		
 	}
 }
