@@ -1,0 +1,30 @@
+package Repository;
+
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import model.Professor;
+
+public class ProfessorRepository {
+	private static final String PASTA = "SIGA";
+	private static final String ARQUIVO = "Professores.csv";
+	
+	public void salvar(Professor novoProfessor) throws IOException {
+		String path = System.getProperty("user.home") + File.separator + PASTA;
+		File dir = new File(path);
+		File arq = new File(path, ARQUIVO);
+		boolean existe = false;
+		if(arq.exists()) {
+			existe = true;
+		}
+		FileWriter fw = new FileWriter(arq, existe);
+		PrintWriter pw = new PrintWriter(fw);
+		//\r\n adicionado para quebra de linha
+		pw.write(novoProfessor.toString()+"\r\n");
+		pw.flush();
+		pw.close();
+		fw.close();
+	}
+}

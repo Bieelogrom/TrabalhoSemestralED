@@ -1,7 +1,12 @@
 package view;
 
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
+
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -11,7 +16,14 @@ import java.text.ParseException;
 
 import javax.swing.Box;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
+
+import controller.ProfessorController;
+import view.elementos.TableActionCellEditor;
+import view.elementos.TableActionCellRender;
+import view.elementos.TableActionEvent;
+
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 
@@ -22,17 +34,38 @@ public class PainelProfessores extends JPanel {
 	private JTextField txtfNomeProfessor;
 	private JComboBox txtfAreaInteresse;
 	private JTextField txtfPontuação;
+	private CardLayout cardLayout;
+	private JPanel painelTroca;
+	private ProfessorController professorController;
 
+	public PainelProfessores() throws Exception {
+        setLayout(new BorderLayout());
+        setBorder(new EmptyBorder(10, 10, 10, 10));
+
+        cardLayout = new CardLayout();
+        painelTroca = new JPanel(cardLayout);
+        add(painelTroca, BorderLayout.CENTER);
+
+        JPanel painelFormulario = formularioCadastroProfessor();
+        JPanel painelTabela = tabelaVisualizacao();
+
+        painelTroca.add(painelFormulario, "formulario");
+        painelTroca.add(painelTabela, "tabela");
+
+        cardLayout.show(painelTroca, "formulario");
+	}
+	
 	/**
 	 * Create the panel.
 	 * @throws Exception 
 	 */
-	public PainelProfessores() throws Exception {
-		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
+	public JPanel formularioCadastroProfessor() throws Exception {
+		JPanel panelP = new JPanel();
+		panelP.setLayout(new BoxLayout(panelP, BoxLayout.X_AXIS));
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new EmptyBorder(20, 20, 20, 20));
-		add(panel);
+		panelP.add(panel);
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 		
 		JPanel panel_2 = new JPanel();
@@ -93,11 +126,62 @@ public class PainelProfessores extends JPanel {
 		JPanel panel_1 = new JPanel();
 		panel.add(panel_1);
 		
+		
 		JButton btnCadastrarProfessor = new JButton("Cadastrar professor");
 		panel_1.add(btnCadastrarProfessor);
 		
 		JButton btnVisualizarProfessores = new JButton("Visualizar professores");
 		panel_1.add(btnVisualizarProfessores);
 		
+		professorController = new ProfessorController(txtfCpfProfessor,txtfNomeProfessor,comboxareaconhecimento,txtfPontuação);
+		btnCadastrarProfessor.addActionListener(professorController);
+		
+		btnVisualizarProfessores.addActionListener(e -> {
+			cardLayout.show(painelTroca, "tabela");
+		});
+		
+		return panelP;
+	}
+	
+	private JTable tabelaCursos;
+	private JTable table;
+    private DefaultTableModel tableModel; 
+	
+	public JPanel tabelaVisualizacao() {
+	       JPanel panel = new JPanel(new BorderLayout());
+	        
+	        JScrollPane scrollPane = new JScrollPane(tabelaCursos);
+	        scrollPane.setBounds(12, 51, 496, 288);
+	        panel.add(scrollPane, BorderLayout.CENTER);
+	        
+	    	table = new JTable();
+			scrollPane.setViewportView(table);
+			table.setModel(new DefaultTableModel(
+				new Object[][] {
+				},
+				new String[] {
+					"CPF", "Nome do professor", "Área do curso", "Pontuação", "Opçoes"
+				}
+			) {
+				private static final long serialVersionUID = 1L;
+				boolean[] columnEditables = new boolean[] {
+					false, false, false, false, true
+				};
+				public boolean isCellEditable(int row, int column) {
+					return columnEditables[column];
+				}
+			});
+			table.setRowHeight(40);
+			tableModel = (DefaultTableModel) table.getModel();
+	        
+	        TableActionEvent event = professorController;
+	        table.getColumnModel().getColumn(3).setCellRenderer(new TableActionCellRender());
+	        table.getColumnModel().getColumn(3).setCellEditor(new TableActionCellEditor(professorController));
+
+	        JButton btnVoltar = new JButton("Voltar");
+	        btnVoltar.addActionListener(e -> cardLayout.show(painelTroca, "formulario"));
+	        panel.add(btnVoltar, BorderLayout.SOUTH);
+
+	        return panel;
 	}
 }

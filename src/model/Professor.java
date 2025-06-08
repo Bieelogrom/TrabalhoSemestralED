@@ -4,9 +4,9 @@ public class Professor {
 	private String cpf;
 	private String nome;
 	private String area;
-	private Float pontuacao;
+	private float pontuacao;
 	
-	public Professor(String cpf, String nome, String area, Float pontuacao) {
+	public Professor(String cpf, String nome, String area, float pontuacao) {
 		this.cpf = cpf;
 		this.nome = nome;
 		this.area = area;
@@ -41,7 +41,14 @@ public class Professor {
 		return pontuacao;
 	}
 
-	public void setPontuacao(Float pontuacao) {
+	public void setPontuacao(float pontuacao) {
 		this.pontuacao = pontuacao;
 	}
+
+	@Override
+	public String toString() {
+		return cpf+";"+nome+";"+area+";"+pontuacao;
+	}
+	
+	
 }
