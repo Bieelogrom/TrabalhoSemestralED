@@ -31,8 +31,9 @@ public class DisciplinaController implements ActionListener, TableActionEvent  {
 	private JComboBox cursoDisciplina;
 	private JFormattedTextField horarioDisciplina;
 	private DisciplinaRepository disciplinaRepository;
+	private JTextField codigoProcesso;
 	
-	public DisciplinaController(IPainelDisciplinas callback, JTextField codigoDisciplina, JTextField nomeDisciplina, JComboBox diaDaSemanaDisciplina, JTextField quantidadeHorasCurso, JComboBox cursoDisciplina, JFormattedTextField horarioDisciplina) {
+	public DisciplinaController(IPainelDisciplinas callback, JTextField codigoDisciplina, JTextField nomeDisciplina, JComboBox diaDaSemanaDisciplina, JTextField quantidadeHorasCurso, JComboBox cursoDisciplina, JFormattedTextField horarioDisciplina, JTextField codigoProcesso) {
 		this.cursoRepository = new CursoRepository();
 		this.callback = callback;
 		this.codigoDisciplina = codigoDisciplina;
@@ -42,6 +43,7 @@ public class DisciplinaController implements ActionListener, TableActionEvent  {
 		this.cursoDisciplina = cursoDisciplina;
 		this.horarioDisciplina = horarioDisciplina;
 		this.disciplinaRepository = new DisciplinaRepository();
+		this.codigoProcesso = codigoProcesso;
 	}
 	
 	public DisciplinaController() {
@@ -66,6 +68,7 @@ public class DisciplinaController implements ActionListener, TableActionEvent  {
 			String nome = nomeDisciplina.getText();
 			String diaDaSemana = (String) diaDaSemanaDisciplina.getSelectedItem();
 			String horario = horarioDisciplina.getText();
+			String processo = codigoProcesso.getText();
 			
 			int quantidadeHoras;
 			try {
@@ -82,8 +85,11 @@ public class DisciplinaController implements ActionListener, TableActionEvent  {
 			if(nome.isBlank()) {
 				throw new IllegalArgumentException("Digite um nome válido para a disciplina!");
 			}
+			if(processo.length() > 6) {
+				throw new IllegalArgumentException("Digite um código de processo válido para a disciplina!");
+			}
 			
-			Disciplina novaDisciplina = new Disciplina(codigo,nome,diaDaSemana,horario,quantidadeHoras,curso);
+			Disciplina novaDisciplina = new Disciplina(codigo,nome,diaDaSemana,horario,quantidadeHoras,curso,processo);
 			disciplinaRepository.salvar(novaDisciplina);
 			callback.limparTextos();
 			JOptionPane.showMessageDialog(null, "Disciplina cadastrado com sucesso!");

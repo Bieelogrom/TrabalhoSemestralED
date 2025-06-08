@@ -43,6 +43,7 @@ public class PainelDisciplinas extends JPanel implements IPainelDisciplinas {
 	private CardLayout cardLayout;
 	private JPanel painelTroca;
 	private JFormattedTextField formattedTextField;
+	private JTextField codigoProcesso;
 	/**
 	 * Create the panel.
 	 * @throws ParseException 
@@ -79,17 +80,35 @@ public class PainelDisciplinas extends JPanel implements IPainelDisciplinas {
 		
 		JPanel panel_3 = new JPanel();
 		panel_5.add(panel_3);
-		panel_3.setLayout(new BoxLayout(panel_3, BoxLayout.Y_AXIS));
+		panel_3.setLayout(new BoxLayout(panel_3, BoxLayout.X_AXIS));
+		
+		JPanel panel_9 = new JPanel();
+		panel_3.add(panel_9);
+		panel_9.setLayout(new BoxLayout(panel_9, BoxLayout.Y_AXIS));
 		
 		JLabel lblCodigoDisciplina = new JLabel("Código da disciplina");
-		panel_3.add(lblCodigoDisciplina);
+		panel_9.add(lblCodigoDisciplina);
 		
 		textField = new JTextField();
-		panel_3.add(textField);
+		panel_9.add(textField);
 		textField.setColumns(10);
 		
+		Component horizontalStrut_2 = Box.createHorizontalStrut(20);
+		panel_3.add(horizontalStrut_2);
+		
+		JPanel panel_10 = new JPanel();
+		panel_3.add(panel_10);
+		panel_10.setLayout(new BoxLayout(panel_10, BoxLayout.Y_AXIS));
+		
+		JLabel lblLblcodigoprocesso = new JLabel("Código do processo");
+		panel_10.add(lblLblcodigoprocesso);
+		
+		codigoProcesso = new JTextField();
+		panel_10.add(codigoProcesso);
+		codigoProcesso.setColumns(10);
+		
 		Component verticalStrut_1 = Box.createVerticalStrut(20);
-		panel_3.add(verticalStrut_1);
+		panel_5.add(verticalStrut_1);
 		
 		JPanel panel_4 = new JPanel();
 		panel_5.add(panel_4);
@@ -103,7 +122,7 @@ public class PainelDisciplinas extends JPanel implements IPainelDisciplinas {
 		textField_1.setColumns(10);
 		
 		Component verticalStrut_2 = Box.createVerticalStrut(20);
-		panel_4.add(verticalStrut_2);
+		panel_5.add(verticalStrut_2);
 		
 		JPanel panel = new JPanel();
 		panel_5.add(panel);
@@ -137,13 +156,13 @@ public class PainelDisciplinas extends JPanel implements IPainelDisciplinas {
 		panel_2.add(txtfQuantidadeHoras);
 		txtfQuantidadeHoras.setColumns(10);
 		
+		Component verticalStrut_3 = Box.createVerticalStrut(20);
+		panel_5.add(verticalStrut_3);
+		
 		
 		JPanel panel_6 = new JPanel();
 		panel_5.add(panel_6);
 		panel_6.setLayout(new BoxLayout(panel_6, BoxLayout.Y_AXIS));
-		
-		Component verticalStrut_3 = Box.createVerticalStrut(20);
-		panel_6.add(verticalStrut_3);
 		
 		JLabel lblCurso = new JLabel("Curso");
 		panel_6.add(lblCurso);
@@ -171,7 +190,7 @@ public class PainelDisciplinas extends JPanel implements IPainelDisciplinas {
 		formattedTextField = new JFormattedTextField(new MaskFormatter("##:##/##:##"));
 		panel_8.add(formattedTextField);
 		
-		this.disciplinaController = new DisciplinaController(this, textField, textField_1, comboboxdiasemana, txtfQuantidadeHoras, comboboxCursos, formattedTextField);
+		this.disciplinaController = new DisciplinaController(this, textField, textField_1, comboboxdiasemana, txtfQuantidadeHoras, comboboxCursos, formattedTextField, codigoProcesso);
 		
 		JButton btnCadastrarNovaDisciplina = new JButton("Cadastrar nova disciplina");
 		panel_7.add(btnCadastrarNovaDisciplina);
@@ -188,8 +207,6 @@ public class PainelDisciplinas extends JPanel implements IPainelDisciplinas {
 			cardLayout.show(painelTroca, "tabela");
 		});
 		
-		
-		
 		btnCadastrarNovaDisciplina.addActionListener(disciplinaController);
 		
 		return panelP;
@@ -198,6 +215,7 @@ public class PainelDisciplinas extends JPanel implements IPainelDisciplinas {
 	private JTable tabelaCursos;
 	private JTable table;
     private DefaultTableModel tableModel;
+    private JTextField textField_2;
 
 	private JPanel tabelaVisualizacao() {
 		JPanel panel = new JPanel(new BorderLayout());

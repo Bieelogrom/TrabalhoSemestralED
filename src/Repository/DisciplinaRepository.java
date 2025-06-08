@@ -47,7 +47,7 @@ public class DisciplinaRepository {
 			String linha = buffer.readLine();
 			while(linha != null) {
 				String[] disciplina = linha.split(";");
-				Disciplina disciplinaDaLista = new Disciplina(disciplina[0], disciplina[1], disciplina[2], disciplina[3], Integer.parseInt(disciplina[4]), disciplina[5]);
+				Disciplina disciplinaDaLista = new Disciplina(disciplina[0], disciplina[1], disciplina[2], disciplina[3], Integer.parseInt(disciplina[4]), disciplina[5], disciplina[6]);
 				filaDeDisciplinas.insert(disciplinaDaLista);
 				linha = buffer.readLine();
 			}
@@ -69,7 +69,7 @@ public class DisciplinaRepository {
 			String linha = buffer.readLine();
 			while(linha != null) {
 				String[] disciplina = linha.split(";");
-				Disciplina disciplinaDaLista = new Disciplina(disciplina[0], disciplina[1], disciplina[2], disciplina[3], Integer.parseInt(disciplina[4]), disciplina[5]);
+				Disciplina disciplinaDaLista = new Disciplina(disciplina[0], disciplina[1], disciplina[2], disciplina[3], Integer.parseInt(disciplina[4]), disciplina[5], disciplina[6]);
 				listaDeDisciplinas.addLast(disciplinaDaLista);
 				linha = buffer.readLine();
 			}
@@ -85,7 +85,7 @@ public class DisciplinaRepository {
 		File arq = new File(path, ARQUIVO);
 		FileWriter fw = new FileWriter(arq);
 		PrintWriter pw = new PrintWriter(fw);
-		for(int i = 0; i < listaDeDisciplinasAtualizadas.size(); i++) {
+		for(int i = 1; i < listaDeDisciplinasAtualizadas.size(); i++) {
 			pw.write(listaDeDisciplinasAtualizadas.get(i).toString()+"\r\n");
 		}
 		pw.flush();

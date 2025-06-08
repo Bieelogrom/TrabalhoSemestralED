@@ -2,6 +2,7 @@ package model;
 
 public class Disciplina {
 	private String codigoDisciplina;
+	private String codigoProcesso;
 	private String nomeDisciplina;
 	private String diaDaSemanaDisciplina;
 	private String horarioDisciplina;
@@ -9,13 +10,14 @@ public class Disciplina {
 	private String curso;
 	
 	public Disciplina(String codigoDisciplina, String nomeDisciplina, String diaDaSemanaDisciplina,
-			String horarioDisciplina, int quantidadeHorasDisciplina, String curso) {
+			String horarioDisciplina, int quantidadeHorasDisciplina, String curso, String codigoProcesso) {
 		this.codigoDisciplina = codigoDisciplina;
 		this.nomeDisciplina = nomeDisciplina;
 		this.diaDaSemanaDisciplina = diaDaSemanaDisciplina;
 		this.horarioDisciplina = horarioDisciplina;
 		this.quantidadeHorasDisciplina = quantidadeHorasDisciplina;
 		this.curso = curso;
+		this.codigoProcesso = codigoProcesso;
 	}
 
 	public String getCodigoDisciplina() {
@@ -64,6 +66,14 @@ public class Disciplina {
 
 	public void setCurso(String curso) {
 		this.curso = curso;
+	}
+	
+	public String getCodigoProcesso() {
+		return codigoProcesso;
+	}
+	
+	public void setCodigoProcesso(boolean codigoProcesso) {
+		this.codigoProcesso = codigoDisciplina;
 	}
 
 	@Override
