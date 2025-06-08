@@ -96,7 +96,7 @@ public class DisciplinaController implements ActionListener, TableActionEvent  {
 
 	//Esse método está aqui para carregar o combobox de cursos.
 	public Lista<Curso> listarCursos() throws Exception {
-		Lista<Curso> listaDeCursos = cursoRepository.visualizar();
+		Lista<Curso> listaDeCursos = cursoRepository.visualizarLista();
 		return listaDeCursos;
 	}
 	

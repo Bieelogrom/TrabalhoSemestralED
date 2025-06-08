@@ -13,6 +13,7 @@ import javax.swing.table.DefaultTableModel;
 import Repository.CursoRepository;
 import Repository.DisciplinaRepository;
 import br.edu.fateczl.Lista;
+import br.edu.fateczl.fila.Fila;
 import model.Curso;
 import model.Disciplina;
 import view.PainelCursos;
@@ -77,8 +78,13 @@ public class CursoController implements ActionListener, TableActionEvent {
 	
 	}
 	
+	public Fila<Curso> enfileirarCursos() throws Exception {
+		Fila<Curso> filaDeCursos = cursoRepository.visualizar();
+		return filaDeCursos;
+	}
+	
 	public Lista<Curso> listarCursos() throws Exception {
-		Lista<Curso> listaDeCursos = cursoRepository.visualizar();
+		Lista<Curso> listaDeCursos = cursoRepository.visualizarLista();
 		return listaDeCursos;
 	}
 

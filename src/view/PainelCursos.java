@@ -10,6 +10,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import br.edu.fateczl.Lista;
+import br.edu.fateczl.fila.Fila;
 import controller.CursoController;
 import model.Curso;
 import view.elementos.TableActionEvent;
@@ -135,16 +136,15 @@ public class PainelCursos extends JPanel implements IPainelCursos {
 	
 	private void atualizarTabelaCursos() throws Exception {
 		//Por questões de praticidade deixei o método público no controller mesmo;
-		Lista<Curso> listaDeCursos = cursoController.listarCursos();
+		Fila<Curso> filaDeCursos = cursoController.enfileirarCursos();
 		tableModel.setRowCount(0);
-		while(!listaDeCursos.isEmpty()) {
-			Curso curso = listaDeCursos.get(0);
+		while(!filaDeCursos.isEmpty()) {
+			Curso curso = filaDeCursos.remove();
 			tableModel.addRow(new Object[] {
 					curso.getCodigoCurso(),
 					curso.getNomeCurso(),
 					curso.getAreaConhecimento()
 			});
-			listaDeCursos.removeFirst();
 		}
 	}
 

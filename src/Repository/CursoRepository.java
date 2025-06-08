@@ -9,6 +9,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
 import br.edu.fateczl.Lista;
+import br.edu.fateczl.fila.Fila;
 import model.Curso;
 
 public class CursoRepository {
@@ -36,7 +37,29 @@ public class CursoRepository {
 		fw.close();
 	}
 	
-	public Lista<Curso> visualizar() throws Exception{
+	public Fila<Curso> visualizar() throws Exception{
+		Fila<Curso> filaDeCursos = new Fila<>();
+		String path = System.getProperty("user.home") + File.separator + PASTA;
+		File arq = new File(path, ARQUIVO);
+		if(arq.exists() && arq.isFile()) {
+			FileInputStream fis = new FileInputStream(arq);
+			InputStreamReader isr = new InputStreamReader(fis);
+			BufferedReader buffer = new BufferedReader(isr);
+			String linha = buffer.readLine();
+			while(linha != null) {
+				String[] curso = linha.split(";");
+				Curso cursoDaLista = new Curso(curso[0], curso[1], curso[2]);
+				filaDeCursos.insert(cursoDaLista);
+				linha = buffer.readLine();
+			}
+			buffer.close();
+			isr.close();
+			fis.close();
+		}
+		return filaDeCursos;
+	}
+	
+	public Lista<Curso> visualizarLista() throws Exception{
 		Lista<Curso> listaDeCursos = new Lista<>();
 		String path = System.getProperty("user.home") + File.separator + PASTA;
 		File arq = new File(path, ARQUIVO);
