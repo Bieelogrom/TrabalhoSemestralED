@@ -12,8 +12,8 @@ import javax.swing.table.DefaultTableModel;
 
 import Repository.CursoRepository;
 import Repository.DisciplinaRepository;
-import br.edu.fateczl.Lista;
 import br.edu.fateczl.fila.Fila;
+import br.edu.fateczl.gabriel.Lista;
 import model.Curso;
 import model.Disciplina;
 import view.PainelCursos;

@@ -8,7 +8,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
-import br.edu.fateczl.Lista;
+import br.edu.fateczl.fila.Fila;
+import br.edu.fateczl.gabriel.Lista;
 import model.Curso;
 import model.Disciplina;
 
@@ -33,7 +34,31 @@ public class DisciplinaRepository {
 		fw.close();
 	}
 	
-	public Lista<Disciplina> visualizar() throws IOException{
+	
+	//Método criado só para seguir os requisitos do domínio.
+	public Fila<Disciplina> visualizar() throws IOException{
+		Fila<Disciplina> filaDeDisciplinas = new Fila<>();
+		String path = System.getProperty("user.home") + File.separator + PASTA;
+		File arq = new File(path, ARQUIVO);
+		if(arq.exists() && arq.isFile()) {
+			FileInputStream fis = new FileInputStream(arq);
+			InputStreamReader isr = new InputStreamReader(fis);
+			BufferedReader buffer = new BufferedReader(isr);
+			String linha = buffer.readLine();
+			while(linha != null) {
+				String[] disciplina = linha.split(";");
+				Disciplina disciplinaDaLista = new Disciplina(disciplina[0], disciplina[1], disciplina[2], disciplina[3], Integer.parseInt(disciplina[4]), disciplina[5]);
+				filaDeDisciplinas.insert(disciplinaDaLista);
+				linha = buffer.readLine();
+			}
+			buffer.close();
+			isr.close();
+			fis.close();
+		}
+		return filaDeDisciplinas;
+	}
+	
+	public Lista<Disciplina> visualizarLista() throws Exception{
 		Lista<Disciplina> listaDeDisciplinas = new Lista<>();
 		String path = System.getProperty("user.home") + File.separator + PASTA;
 		File arq = new File(path, ARQUIVO);
@@ -45,7 +70,7 @@ public class DisciplinaRepository {
 			while(linha != null) {
 				String[] disciplina = linha.split(";");
 				Disciplina disciplinaDaLista = new Disciplina(disciplina[0], disciplina[1], disciplina[2], disciplina[3], Integer.parseInt(disciplina[4]), disciplina[5]);
-				listaDeDisciplinas.addFirst(disciplinaDaLista);
+				listaDeDisciplinas.addLast(disciplinaDaLista);
 				linha = buffer.readLine();
 			}
 			buffer.close();

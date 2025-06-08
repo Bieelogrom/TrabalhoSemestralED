@@ -8,8 +8,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
-import br.edu.fateczl.Lista;
-import br.edu.fateczl.fila.Fila;
+import br.edu.fateczl.fila.*;
+import br.edu.fateczl.gabriel.Lista;
 import model.Curso;
 
 public class CursoRepository {

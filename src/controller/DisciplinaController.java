@@ -12,7 +12,8 @@ import javax.swing.text.MaskFormatter;
 
 import Repository.CursoRepository;
 import Repository.DisciplinaRepository;
-import br.edu.fateczl.Lista;
+import br.edu.fateczl.fila.Fila;
+import br.edu.fateczl.gabriel.Lista;
 import model.Curso;
 import model.Disciplina;
 import view.elementos.IPainelDisciplinas;
@@ -101,8 +102,13 @@ public class DisciplinaController implements ActionListener, TableActionEvent  {
 	}
 	
 	//Esse método está aqui para uso geral e também carregar a tabela de visualização.
+	public Fila<Disciplina> enfileirarDisciplinas() throws Exception {
+		Fila<Disciplina> filaDeDisciplinas = disciplinaRepository.visualizar();
+		return filaDeDisciplinas;
+	}
+	
 	public Lista<Disciplina> listarDisciplinas() throws Exception {
-		Lista<Disciplina> listaDeDisciplinas = disciplinaRepository.visualizar();
+		Lista<Disciplina> listaDeDisciplinas = disciplinaRepository.visualizarLista();
 		return listaDeDisciplinas;
 	}
 

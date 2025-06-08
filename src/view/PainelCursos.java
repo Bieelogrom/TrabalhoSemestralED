@@ -9,7 +9,6 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-import br.edu.fateczl.Lista;
 import br.edu.fateczl.fila.Fila;
 import controller.CursoController;
 import model.Curso;

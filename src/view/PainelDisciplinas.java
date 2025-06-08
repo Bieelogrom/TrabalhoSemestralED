@@ -14,7 +14,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
 
-import br.edu.fateczl.Lista;
+import br.edu.fateczl.fila.Fila;
+import br.edu.fateczl.gabriel.Lista;
 import controller.CursoController;
 import controller.DisciplinaController;
 import model.Curso;
@@ -211,12 +212,12 @@ public class PainelDisciplinas extends JPanel implements IPainelDisciplinas {
 				new Object[][] {
 				},
 				new String[] {
-					"ID", "Nome da disciplina", "Curso da disciplina", "Opçoes"
+					"ID", "Nome da disciplina","Dia de semana","Horário","Carga horária","Curso da disciplina", "Opçoes"
 				}
 			) {
 				private static final long serialVersionUID = 1L;
 				boolean[] columnEditables = new boolean[] {
-					false, false, false, true
+					false, false, false, false, false, false, true
 				};
 				public boolean isCellEditable(int row, int column) {
 					return columnEditables[column];
@@ -226,8 +227,8 @@ public class PainelDisciplinas extends JPanel implements IPainelDisciplinas {
 			tableModel = (DefaultTableModel) table.getModel();
 	        
 	        TableActionEvent event = disciplinaController;
-	        table.getColumnModel().getColumn(3).setCellRenderer(new TableActionCellRender());
-	        table.getColumnModel().getColumn(3).setCellEditor(new TableActionCellEditor(disciplinaController));
+	        table.getColumnModel().getColumn(6).setCellRenderer(new TableActionCellRender());
+	        table.getColumnModel().getColumn(6).setCellEditor(new TableActionCellEditor(disciplinaController));
 
 	        JButton btnVoltar = new JButton("Voltar");
 	        btnVoltar.addActionListener(e -> cardLayout.show(painelTroca, "formulario"));
@@ -242,16 +243,18 @@ public class PainelDisciplinas extends JPanel implements IPainelDisciplinas {
 	 */
 	@Override
 	public void atualizarTabela() throws Exception {
-		Lista<Disciplina> listaDeDisciplinas = disciplinaController.listarDisciplinas();
+		Fila<Disciplina> filaDeDisciplinas = disciplinaController.enfileirarDisciplinas();
 		tableModel.setRowCount(0);
-		while(!listaDeDisciplinas.isEmpty()) {
-			Disciplina disciplina = listaDeDisciplinas.get(0);
+		while(!filaDeDisciplinas.isEmpty()) {
+			Disciplina disciplina = filaDeDisciplinas.remove();
 			tableModel.addRow(new Object[] {
 				disciplina.getCodigoDisciplina(),
 				disciplina.getNomeDisciplina(),
+				disciplina.getDiaDaSemanaDisciplina(),
+				disciplina.getHorarioDisciplina(),
+				disciplina.getQuantidadeHorasDisciplina(),
 				disciplina.getCurso()
 			});
-			listaDeDisciplinas.removeFirst();
 		}
 	}
 
