@@ -89,7 +89,7 @@ public class DisciplinaController implements ActionListener, TableActionEvent  {
 				throw new IllegalArgumentException("Digite um código de processo válido para a disciplina!");
 			}
 			
-			Disciplina novaDisciplina = new Disciplina(codigo,nome,diaDaSemana,horario,quantidadeHoras,curso,processo);
+			Disciplina novaDisciplina = new Disciplina(codigo,processo,nome,diaDaSemana,horario,quantidadeHoras,curso);
 			disciplinaRepository.salvar(novaDisciplina);
 			callback.limparTextos();
 			JOptionPane.showMessageDialog(null, "Disciplina cadastrado com sucesso!");

@@ -271,7 +271,7 @@ public class PainelDisciplinas extends JPanel implements IPainelDisciplinas {
 				disciplina.getDiaDaSemanaDisciplina(),
 				disciplina.getHorarioDisciplina(),
 				disciplina.getQuantidadeHorasDisciplina(),
-				disciplina.getCurso()
+				disciplina.getCurso(),
 			});
 		}
 	}

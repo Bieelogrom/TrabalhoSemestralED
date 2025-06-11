@@ -2,15 +2,15 @@ package model;
 
 public class Disciplina {
 	private String codigoDisciplina;
-	private String codigoProcesso;
 	private String nomeDisciplina;
 	private String diaDaSemanaDisciplina;
 	private String horarioDisciplina;
 	private int quantidadeHorasDisciplina;
 	private String curso;
+	private String codigoProcesso;
 	
-	public Disciplina(String codigoDisciplina, String nomeDisciplina, String diaDaSemanaDisciplina,
-			String horarioDisciplina, int quantidadeHorasDisciplina, String curso, String codigoProcesso) {
+	public Disciplina(String codigoDisciplina, String codigoProcesso, String nomeDisciplina, String diaDaSemanaDisciplina,
+			String horarioDisciplina, int quantidadeHorasDisciplina, String curso) {
 		this.codigoDisciplina = codigoDisciplina;
 		this.nomeDisciplina = nomeDisciplina;
 		this.diaDaSemanaDisciplina = diaDaSemanaDisciplina;
@@ -78,8 +78,8 @@ public class Disciplina {
 
 	@Override
 	public String toString() {
-		return codigoDisciplina+";"+nomeDisciplina+";"+diaDaSemanaDisciplina+";"+horarioDisciplina
-				+";"+quantidadeHorasDisciplina+";"+curso;
+		return codigoDisciplina+";"+codigoProcesso+";"+nomeDisciplina+";"+diaDaSemanaDisciplina+";"+horarioDisciplina
+				+";"+quantidadeHorasDisciplina+";"+curso+";";
 	} 
 	
 	
