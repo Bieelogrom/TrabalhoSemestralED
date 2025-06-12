@@ -58,7 +58,7 @@ public class PainelInscricoes extends JPanel implements IPainelInscricoes {
 		JLabel lblCdigoDaDisciplina = new JLabel("Código da disciplina");
 		panel_1.add(lblCdigoDaDisciplina);
 		
-		comboBoxCodigoDisciplina = new JFormattedTextField(new MaskFormatter("COD###"));
+		comboBoxCodigoDisciplina = new JFormattedTextField(new MaskFormatter("UUU###"));
 		panel_1.add(comboBoxCodigoDisciplina);
 		
 		JButton btnInscreverProfessor = new JButton("Inscrever professor");
@@ -72,20 +72,11 @@ public class PainelInscricoes extends JPanel implements IPainelInscricoes {
 			new Object[][] {
 			},
 			new String[] {
-				"CPF do Professor", "Pontua\u00E7\u00E3o", "Data de inscri\u00E7\u00E3o", "C\u00F3digo da disciplina"
+				"Disciplina", "Inscritos", "Op\u00E7\u00F5es"
 			}
-		) {
-			private static final long serialVersionUID = 1L;
-			boolean[] columnEditables = new boolean[] {
-				true, false, false, false
-			};
-			public boolean isCellEditable(int row, int column) {
-				return columnEditables[column];
-			}
-		});
+		));
 		table.getColumnModel().getColumn(1).setResizable(false);
 		table.getColumnModel().getColumn(2).setResizable(false);
-		table.getColumnModel().getColumn(3).setResizable(false);
 		scrollPane.setViewportView(table);
 		
 		this.inscricaoController = new InscricaoController(txtfCpfProfessor,comboBoxCodigoDisciplina);

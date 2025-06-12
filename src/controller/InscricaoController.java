@@ -7,6 +7,7 @@ import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
+import Repository.InscricaoRepository;
 import model.Inscricao;
 
 public class InscricaoController implements ActionListener {
@@ -14,10 +15,12 @@ public class InscricaoController implements ActionListener {
 	private String patternCodigoCurso = "^[A-Za-z]{3}[0-9]{3}$"; 
 	private JTextField cpfProfessor;
 	private JTextField codigoDisciplina;
+	private InscricaoRepository inscricaoRepository;
 	
 	public InscricaoController(JTextField cpfProfessor, JTextField codigoDisciplina) {
 		this.cpfProfessor = cpfProfessor;
 		this.codigoDisciplina = codigoDisciplina;
+		this.inscricaoRepository = new InscricaoRepository();
 	}
 
 	@Override
@@ -37,8 +40,8 @@ public class InscricaoController implements ActionListener {
 				throw new Exception("Digite um código válido!");
 			}
 			
-			System.out.println(cpf+disciplina);
-			//Inscricao novaInscricao = new Inscricao(cpf,disciplina);
+			Inscricao novaInscricao = new Inscricao(cpf,disciplina);
+			
 		}catch(Exception ex) {
 			JOptionPane.showMessageDialog(null, ex.getMessage());
 		}
