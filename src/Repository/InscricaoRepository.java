@@ -49,7 +49,7 @@ public class InscricaoRepository {
 			String linha = buffer.readLine();
 			while(linha != null) {
 				String[] inscricao = linha.split(";");
-				Inscricao cursoDaLista = new Inscricao(inscricao[0], inscricao[1]);
+				Inscricao cursoDaLista = new Inscricao(inscricao[0], inscricao[1], inscricao[2]);
 				filaDeInscricoes.insert(cursoDaLista);
 				linha = buffer.readLine();
 			}

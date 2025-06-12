@@ -216,7 +216,8 @@ public class PainelProfessores extends JPanel implements IPainelProfessores {
 
 	@Override
 	public void limparTextos() {
-		// TODO Auto-generated method stub
-	
+		txtfNomeProfessor.setText("");
+		txtfCpfProfessor.setText("");
+		txtfPontuação.setText("");
 	}
 }

@@ -3,11 +3,13 @@ package model;
 public class Inscricao {
 	private String cpfProfessor;
 	private String codigoDisciplina;
+	private String codigoProcesso;
 	
-	public Inscricao(String cpfProfessor, String codigoDisciplina) {
+	public Inscricao(String cpfProfessor, String codigoDisciplina, String codigoProcesso) {
 		super();
 		this.cpfProfessor = cpfProfessor;
 		this.codigoDisciplina = codigoDisciplina;
+		this.codigoProcesso = codigoProcesso;
 	}
 
 	public String getCpfProfessor() {
@@ -26,8 +28,16 @@ public class Inscricao {
 		this.codigoDisciplina = codigoDisciplina;
 	}
 
+	public String getCodigoProcesso() {
+		return codigoProcesso;
+	}
+
+	public void setCodigoProcesso(String codigoProcesso) {
+		this.codigoProcesso = codigoProcesso;
+	}
+
 	@Override
 	public String toString() {
-		return cpfProfessor+";"+codigoDisciplina;
+		return cpfProfessor+";"+codigoDisciplina+";"+codigoProcesso;
 	}
 }

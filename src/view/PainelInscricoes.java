@@ -16,8 +16,13 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.text.MaskFormatter;
 
 import br.edu.fateczl.fila.Fila;
+import br.edu.fateczl.gabriel.Lista;
+import controller.DisciplinaController;
 import controller.InscricaoController;
+import controller.ProfessorController;
+import model.Disciplina;
 import model.Inscricao;
+import model.Professor;
 import view.elementos.IPainelInscricoes;
 import view.elementos.TableActionCellEditor;
 import view.elementos.TableActionCellRender;
@@ -34,6 +39,8 @@ public class PainelInscricoes extends JPanel implements IPainelInscricoes {
 	private JFormattedTextField textField;
 	private InscricaoController inscricaoController;
 	private DefaultTableModel tableModel;
+	private ProfessorController professorController;
+	private DisciplinaController disciplinaController;
 
 	/**
 	 * Create the panel.
@@ -93,16 +100,15 @@ public class PainelInscricoes extends JPanel implements IPainelInscricoes {
 			new Object[][] {
 			},
 			new String[] {
-				"Disciplina", "Professor", "Op\u00E7\u00F5es"
+				"C\u00F3digo", "Disciplina", "Professor", "Op\u00E7\u00F5es"
 			}
 		));
+		table.getColumnModel().getColumn(2).setResizable(false);
+		table.getColumnModel().getColumn(3).setResizable(false);
 		table.setRowHeight(40);
 		tableModel = (DefaultTableModel) table.getModel();
 		TableActionEvent event = inscricaoController;
-        table.getColumnModel().getColumn(2).setCellRenderer(new TableActionCellRender());
-        table.getColumnModel().getColumn(2).setCellEditor(new TableActionCellEditor(inscricaoController));
-		table.getColumnModel().getColumn(1).setResizable(false);
-		table.getColumnModel().getColumn(2).setResizable(false);
+
 		scrollPane.setViewportView(table);
 		
 		Component horizontalStrut = Box.createHorizontalStrut(20);
@@ -119,7 +125,12 @@ public class PainelInscricoes extends JPanel implements IPainelInscricoes {
 		panel_4.add(textField);
 		textField.setColumns(5);
 		
-		this.inscricaoController = new InscricaoController(txtfCpfProfessor,comboBoxCodigoDisciplina,textField);
+		this.disciplinaController = new DisciplinaController();
+		this.professorController = new ProfessorController();
+		this.inscricaoController = new InscricaoController(txtfCpfProfessor,comboBoxCodigoDisciplina,textField, this);
+		
+	    table.getColumnModel().getColumn(3).setCellRenderer(new TableActionCellRender());
+	    table.getColumnModel().getColumn(3).setCellEditor(new TableActionCellEditor(inscricaoController));
 		
 		btnInscreverProfessor.addActionListener(inscricaoController);
 	}
@@ -130,8 +141,20 @@ public class PainelInscricoes extends JPanel implements IPainelInscricoes {
 	 */
 	@Override
 	public void atualizarCombosBox() {
-		//Fila<Inscricao> filaDeInscricoes = 
-		
+		try {
+			comboBoxCodigoDisciplina.removeAllItems();
+			txtfCpfProfessor.removeAllItems();
+			Lista<Professor> listaDeProfessores = professorController.listarProfessor();
+			Lista<Disciplina> listaDeDisciplinas = disciplinaController.listarDisciplinas();
+			for(int i = 0; i < listaDeProfessores.size(); i++) {
+				txtfCpfProfessor.addItem(listaDeProfessores.get(i).getCpf());
+			}
+			for(int i = 0; i < listaDeDisciplinas.size(); i++) {
+				comboBoxCodigoDisciplina.addItem(listaDeDisciplinas.get(i).getCodigoDisciplina());
+			}
+		}catch(Exception ex) {
+			System.err.println(ex.getMessage());
+		}
 	}
 
 	@Override
@@ -141,6 +164,7 @@ public class PainelInscricoes extends JPanel implements IPainelInscricoes {
 		while(!filaDeInscricoes.isEmpty()) {
 			Inscricao inscricao = filaDeInscricoes.remove();
 			tableModel.addRow(new Object[] {
+					inscricao.getCodigoProcesso(),
 					inscricao.getCodigoDisciplina(),
 					inscricao.getCpfProfessor()
 			});

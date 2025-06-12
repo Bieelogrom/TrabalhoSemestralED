@@ -61,7 +61,7 @@ public class ProfessorController implements ActionListener, TableActionEvent {
 			
 			Professor novoProfessor = new Professor(cpf,nome,area,pontuacaoP);
 			professorRepository.salvar(novoProfessor);
-
+			callback.limparTextos();
 			JOptionPane.showMessageDialog(null, "Professor cadastrado com sucesso!");
 		}catch(IllegalArgumentException ex) {
 			JOptionPane.showMessageDialog(null, ex.getMessage());

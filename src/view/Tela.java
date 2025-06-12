@@ -83,6 +83,7 @@ public class Tela extends JFrame {
 			if("Inscrições".equals(tabTitle)) {
 				try {
 					painelInscricoes.atualizarTabela();
+					painelInscricoes.atualizarCombosBox();
 				}catch(Exception e1) {
 					e1.printStackTrace();
 				}

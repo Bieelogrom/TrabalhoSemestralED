@@ -2,6 +2,7 @@ package controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
@@ -11,6 +12,7 @@ import javax.swing.JTextField;
 import Repository.InscricaoRepository;
 import br.edu.fateczl.fila.Fila;
 import model.Inscricao;
+import view.elementos.IPainelInscricoes;
 import view.elementos.TableActionEvent;
 
 public class InscricaoController implements ActionListener, TableActionEvent {
@@ -20,11 +22,13 @@ public class InscricaoController implements ActionListener, TableActionEvent {
 	private JComboBox<String> codigoDisciplina;
 	private JFormattedTextField codigoProcesso;
 	private InscricaoRepository inscricaoRepository;
+	private IPainelInscricoes callback;
 	
-	public InscricaoController(JComboBox<String> cpfProfessor, JComboBox<String> codigoDisciplina, JFormattedTextField codigoProcesso) {
+	public InscricaoController(JComboBox<String> cpfProfessor, JComboBox<String> codigoDisciplina, JFormattedTextField codigoProcesso, IPainelInscricoes callback) {
 		this.cpfProfessor = cpfProfessor;
 		this.codigoDisciplina = codigoDisciplina;
 		this.codigoProcesso = codigoProcesso;
+		this.callback = callback;
 		this.inscricaoRepository = new InscricaoRepository();
 	}
 
@@ -33,11 +37,38 @@ public class InscricaoController implements ActionListener, TableActionEvent {
 	public void actionPerformed(ActionEvent e) {
 		String cmd = e.getActionCommand();
 		if(cmd.equals("Inscrever professor")) {
-			System.out.println("erro");
+			try {
+				inscreverProfessor();
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (Exception e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 		}
 	}
 
 	
+	private void inscreverProfessor() throws Exception {
+		String cpf = (String) cpfProfessor.getSelectedItem();
+		String codDisc = (String) codigoDisciplina.getSelectedItem();
+		String codProc = codigoProcesso.getText();
+		
+		/*
+		 * Usei aquele regex pra forçar usuário a digitar os código de uma forma, pórem, o mais eficiente era usar o próprio Jformmated com mask
+		 */
+		
+		if(codProc.isBlank() || !codProc.matches(patternCodigoCurso)) {
+			throw new IllegalArgumentException("Digite um código de processo válido!");
+		}
+		
+		Inscricao novaInscricao = new Inscricao(cpf, codDisc, codProc);
+		inscricaoRepository.salvar(novaInscricao);
+		callback.atualizarTabela();
+	}
+
+
 	public Fila<Inscricao> enfileirarInscricoes() throws Exception {
 		Fila<Inscricao> filaDeInscricoes = inscricaoRepository.visualizarFila();
 		return filaDeInscricoes;
@@ -45,8 +76,7 @@ public class InscricaoController implements ActionListener, TableActionEvent {
 
 	@Override
 	public void onEdit(int row) {
-		// TODO Auto-generated method stub
-		
+		System.out.println("Gabriel");
 	}
 
 	@Override
