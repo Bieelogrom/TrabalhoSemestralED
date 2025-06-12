@@ -5,12 +5,21 @@ public class Professor {
 	private String nome;
 	private String area;
 	private float pontuacao;
+	private String codigoProcesso;
 	
 	public Professor(String cpf, String nome, String area, float pontuacao) {
 		this.cpf = cpf;
 		this.nome = nome;
 		this.area = area;
 		this.pontuacao = pontuacao;
+	}
+	
+	public Professor(String cpf, String nome, String area, float pontuacao, String codigoProcesso) {
+		this.cpf = cpf;
+		this.nome = nome;
+		this.area = area;
+		this.pontuacao = pontuacao;
+		this.codigoProcesso = codigoProcesso;
 	}
 
 	public String getCpf() {
@@ -43,6 +52,14 @@ public class Professor {
 
 	public void setPontuacao(float pontuacao) {
 		this.pontuacao = pontuacao;
+	}
+
+	public String getCodigoProcesso() {
+		return codigoProcesso;
+	}
+
+	public void setCodigoProcesso(String codigoProcesso) {
+		this.codigoProcesso = codigoProcesso;
 	}
 
 	@Override

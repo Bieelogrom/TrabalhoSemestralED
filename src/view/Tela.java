@@ -4,6 +4,7 @@ import java.awt.Component;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
@@ -52,13 +53,13 @@ public class Tela extends JFrame {
 		PainelDisciplinas painelDisciplinas = new PainelDisciplinas();
 		PainelCursos painelCursos = new PainelCursos();
 		PainelInscricoes painelInscricoes = new PainelInscricoes();
-		//PainelInscricoesPorDisciplina painelInscricoesPorDisciplina = new PainelInscricoesPorDisciplina();
-	
+		PainelConsulta painelConsulta = new PainelConsulta();
+
 		tabbedPane.addTab("Cursos", null, painelCursos, null);
 		tabbedPane.addTab("Disciplinas", null, painelDisciplinas, null);
 		tabbedPane.addTab("Professores", null, new PainelProfessores(), null);
 		tabbedPane.addTab("Inscrições", null, painelInscricoes, null);
-		//tabbedPane.addTab("Inscricões por disciplina", null, painelInscricoesPorDisciplina, null);
+		tabbedPane.addTab("Consulta", null, painelConsulta, null);
 		
 		
 		/*
@@ -77,7 +78,7 @@ public class Tela extends JFrame {
 					painelDisciplinas.atualizarTabela();
 				} catch (Exception e1) {
 					// TODO Auto-generated catch block
-					e1.printStackTrace();
+					JOptionPane.showMessageDialog(null, e1.getMessage());
 				}
 			}
 			if("Inscrições".equals(tabTitle)) {
@@ -85,10 +86,16 @@ public class Tela extends JFrame {
 					painelInscricoes.atualizarTabela();
 					painelInscricoes.atualizarCombosBox();
 				}catch(Exception e1) {
-					e1.printStackTrace();
+					JOptionPane.showMessageDialog(null, e1.getMessage());
 				}
 			}
-		
+			if("Consulta".equals(tabTitle)) {
+				try {
+					painelConsulta.carregarComboBox();
+				}catch(Exception e1) {
+					JOptionPane.showMessageDialog(null, e1.getMessage());
+				}
+			}
 		});
 	}
 

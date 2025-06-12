@@ -137,4 +137,14 @@ public class ProfessorController implements ActionListener, TableActionEvent {
 		}
 	}
 
+	public boolean professorExiste(String cpf) throws Exception {
+		Lista<Professor> listaDeProfessores = listarProfessor();
+		for(int i = 0; i < listaDeProfessores.size(); i++) {
+			Professor professor = listaDeProfessores.get(i);
+			if(professor.getCpf().equals(cpf)) {
+				return true;
+			}
+		}
+		return false;
+	}
 }

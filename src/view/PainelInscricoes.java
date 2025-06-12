@@ -6,6 +6,7 @@ import java.text.ParseException;
 
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JFormattedTextField;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
@@ -153,7 +154,7 @@ public class PainelInscricoes extends JPanel implements IPainelInscricoes {
 				comboBoxCodigoDisciplina.addItem(listaDeDisciplinas.get(i).getCodigoDisciplina());
 			}
 		}catch(Exception ex) {
-			System.err.println(ex.getMessage());
+			JOptionPane.showMessageDialog(null, ex.getMessage());
 		}
 	}
 

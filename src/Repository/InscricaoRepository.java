@@ -9,7 +9,9 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
 import br.edu.fateczl.fila.Fila;
+import br.edu.fateczl.gabriel.Lista;
 import model.Curso;
+import model.Disciplina;
 import model.Inscricao;
 
 public class InscricaoRepository {
@@ -58,5 +60,27 @@ public class InscricaoRepository {
 			fis.close();
 		}
 		return filaDeInscricoes;
+	}
+
+	public Lista<Inscricao> visualizarLista() throws Exception {
+		Lista<Inscricao> listaDeInscricoes = new Lista<>();
+		String path = System.getProperty("user.home") + File.separator + PASTA;
+		File arq = new File(path, ARQUIVO);
+		if(arq.exists() && arq.isFile()) {
+			FileInputStream fis = new FileInputStream(arq);
+			InputStreamReader isr = new InputStreamReader(fis);
+			BufferedReader buffer = new BufferedReader(isr);
+			String linha = buffer.readLine();
+			while(linha != null) {
+				String[] inscricao = linha.split(";");
+				Inscricao inscricaoDaLista = new Inscricao(inscricao[0],inscricao[1],inscricao[2]);
+				listaDeInscricoes.addLast(inscricaoDaLista);
+				linha = buffer.readLine();
+			}
+			buffer.close();
+			isr.close();
+			fis.close();
+		}
+		return listaDeInscricoes;
 	}
 }

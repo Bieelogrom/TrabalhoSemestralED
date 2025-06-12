@@ -11,6 +11,7 @@ import javax.swing.JTextField;
 
 import Repository.InscricaoRepository;
 import br.edu.fateczl.fila.Fila;
+import br.edu.fateczl.gabriel.Lista;
 import model.Inscricao;
 import view.elementos.IPainelInscricoes;
 import view.elementos.TableActionEvent;
@@ -29,6 +30,10 @@ public class InscricaoController implements ActionListener, TableActionEvent {
 		this.codigoDisciplina = codigoDisciplina;
 		this.codigoProcesso = codigoProcesso;
 		this.callback = callback;
+		this.inscricaoRepository = new InscricaoRepository();
+	}
+	
+	public InscricaoController() {
 		this.inscricaoRepository = new InscricaoRepository();
 	}
 
@@ -55,6 +60,11 @@ public class InscricaoController implements ActionListener, TableActionEvent {
 		String codDisc = (String) codigoDisciplina.getSelectedItem();
 		String codProc = codigoProcesso.getText();
 		
+		
+		if(cpf == null || cpf.isEmpty() || codDisc == null || codDisc.isEmpty() || codProc == null || codProc.isEmpty()) {
+			JOptionPane.showMessageDialog(null, "Todos os campos são obrigatórios.");
+		    return;
+		}
 		/*
 		 * Usei aquele regex pra forçar usuário a digitar os código de uma forma, pórem, o mais eficiente era usar o próprio Jformmated com mask
 		 */
@@ -72,6 +82,11 @@ public class InscricaoController implements ActionListener, TableActionEvent {
 	public Fila<Inscricao> enfileirarInscricoes() throws Exception {
 		Fila<Inscricao> filaDeInscricoes = inscricaoRepository.visualizarFila();
 		return filaDeInscricoes;
+	}
+	
+	public Lista<Inscricao> listaInscricoes() throws Exception{
+		Lista<Inscricao> listaDeInscricao = inscricaoRepository.visualizarLista();
+		return listaDeInscricao;
 	}
 
 	@Override
