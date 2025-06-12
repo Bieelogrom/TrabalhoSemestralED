@@ -137,7 +137,7 @@ public class PainelProfessores extends JPanel implements IPainelProfessores {
 		JButton btnVisualizarProfessores = new JButton("Visualizar professores");
 		panel_1.add(btnVisualizarProfessores);
 		
-		professorController = new ProfessorController(txtfCpfProfessor,txtfNomeProfessor,comboxareaconhecimento,txtfPontuação);
+		professorController = new ProfessorController(txtfCpfProfessor,txtfNomeProfessor,comboxareaconhecimento,txtfPontuação, this);
 		btnCadastrarProfessor.addActionListener(professorController);
 		
 		btnVisualizarProfessores.addActionListener(e -> {
@@ -210,13 +210,13 @@ public class PainelProfessores extends JPanel implements IPainelProfessores {
 	}
 
 	@Override
-	public void atualizarTabela() {
-		
+	public void atualizarTabela() throws Exception {
+		atualizarTabelaProfessores();
 	}
 
 	@Override
 	public void limparTextos() {
 		// TODO Auto-generated method stub
-		
+	
 	}
 }

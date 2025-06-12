@@ -10,6 +10,7 @@ import java.io.PrintWriter;
 
 
 import br.edu.fateczl.fila.Fila;
+import br.edu.fateczl.gabriel.Lista;
 import model.Curso;
 import model.Professor;
 
@@ -54,5 +55,40 @@ public class ProfessorRepository {
 			fis.close();
 		}
 		return filaDeProfessores;
+	}
+
+	public Lista<Professor> visualizarLista() throws Exception {
+		Lista<Professor> listaDeProfessores = new Lista<>();
+		String path = System.getProperty("user.home") + File.separator + PASTA;
+		File arq = new File(path, ARQUIVO);
+		if(arq.exists() && arq.isFile()) {
+			FileInputStream fis = new FileInputStream(arq);
+			InputStreamReader isr = new InputStreamReader(fis);
+			BufferedReader buffer = new BufferedReader(isr);
+			String linha = buffer.readLine();
+			while(linha != null) {
+				String[] professor = linha.split(";");
+				Professor professorDaLista = new Professor(professor[0],professor[1],professor[2],Float.parseFloat(professor[3]));
+				listaDeProfessores.addLast(professorDaLista);
+				linha = buffer.readLine();
+			}
+			buffer.close();
+			isr.close();
+			fis.close();
+		}
+		return listaDeProfessores;
+	}
+
+	public void remover(Lista<Professor> listaDeProfessor) throws Exception {
+		String path = System.getProperty("user.home") + File.separator + PASTA;
+		File arq = new File(path, ARQUIVO);
+		FileWriter fw = new FileWriter(arq);
+		PrintWriter pw = new PrintWriter(fw);
+		for(int i = 1; i < listaDeProfessor.size(); i++) {
+			pw.write(listaDeProfessor.get(i).toString()+"\r\n");
+		}
+		pw.flush();
+		pw.close();
+		fw.close();
 	}
 }
