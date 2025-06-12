@@ -10,6 +10,8 @@ import javax.swing.JTextField;
 import model.Inscricao;
 
 public class InscricaoController implements ActionListener {
+	
+	private String patternCodigoCurso = "^[A-Za-z]{3}[0-9]{3}$"; 
 	private JTextField cpfProfessor;
 	private JTextField codigoDisciplina;
 	
@@ -31,7 +33,12 @@ public class InscricaoController implements ActionListener {
 			String cpf = cpfProfessor.getText();
 			String disciplina = codigoDisciplina.getText();
 			
-			Inscricao novaInscricao = new Inscricao(cpf,disciplina);
+			if(!disciplina.matches(patternCodigoCurso)) {
+				throw new Exception("Digite um código válido!");
+			}
+			
+			System.out.println(cpf+disciplina);
+			//Inscricao novaInscricao = new Inscricao(cpf,disciplina);
 		}catch(Exception ex) {
 			JOptionPane.showMessageDialog(null, ex.getMessage());
 		}

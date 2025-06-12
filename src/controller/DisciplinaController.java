@@ -31,9 +31,9 @@ public class DisciplinaController implements ActionListener, TableActionEvent  {
 	private JComboBox cursoDisciplina;
 	private JFormattedTextField horarioDisciplina;
 	private DisciplinaRepository disciplinaRepository;
-	private JTextField codigoProcesso;
+	private JFormattedTextField codigoProcesso;
 	
-	public DisciplinaController(IPainelDisciplinas callback, JTextField codigoDisciplina, JTextField nomeDisciplina, JComboBox diaDaSemanaDisciplina, JTextField quantidadeHorasCurso, JComboBox cursoDisciplina, JFormattedTextField horarioDisciplina, JTextField codigoProcesso) {
+	public DisciplinaController(IPainelDisciplinas callback, JTextField codigoDisciplina, JTextField nomeDisciplina, JComboBox diaDaSemanaDisciplina, JTextField quantidadeHorasCurso, JComboBox cursoDisciplina, JFormattedTextField horarioDisciplina, JFormattedTextField codigoProcesso) {
 		this.cursoRepository = new CursoRepository();
 		this.callback = callback;
 		this.codigoDisciplina = codigoDisciplina;

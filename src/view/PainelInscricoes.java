@@ -1,6 +1,9 @@
 package view;
 
 import javax.swing.JPanel;
+
+import java.text.ParseException;
+
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JFormattedTextField;
@@ -10,6 +13,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.JScrollPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.MaskFormatter;
 
 import br.edu.fateczl.fila.Fila;
 import controller.InscricaoController;
@@ -20,14 +24,15 @@ public class PainelInscricoes extends JPanel implements IPainelInscricoes {
 
 	private static final long serialVersionUID = 1L;
 	private JTable table;
-	private JTextField txtfCpfProfessor;
-	private JTextField comboBoxCodigoDisciplina;
+	private JFormattedTextField txtfCpfProfessor;
+	private JFormattedTextField comboBoxCodigoDisciplina;
 	private InscricaoController inscricaoController;
 
 	/**
 	 * Create the panel.
+	 * @throws ParseException 
 	 */
-	public PainelInscricoes() {
+	public PainelInscricoes() throws ParseException {
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		
 		JPanel panel_3 = new JPanel();
@@ -43,7 +48,7 @@ public class PainelInscricoes extends JPanel implements IPainelInscricoes {
 		JLabel lblCpfProfessor = new JLabel("CPF do professor");
 		panel.add(lblCpfProfessor);
 		
-		txtfCpfProfessor = new JTextField();
+		txtfCpfProfessor = new JFormattedTextField(new MaskFormatter("###.###.###-##"));
 		panel.add(txtfCpfProfessor);
 		
 		JPanel panel_1 = new JPanel();
@@ -53,7 +58,7 @@ public class PainelInscricoes extends JPanel implements IPainelInscricoes {
 		JLabel lblCdigoDaDisciplina = new JLabel("Código da disciplina");
 		panel_1.add(lblCdigoDaDisciplina);
 		
-		comboBoxCodigoDisciplina = new JTextField();
+		comboBoxCodigoDisciplina = new JFormattedTextField(new MaskFormatter("COD###"));
 		panel_1.add(comboBoxCodigoDisciplina);
 		
 		JButton btnInscreverProfessor = new JButton("Inscrever professor");

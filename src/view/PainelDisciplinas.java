@@ -43,7 +43,7 @@ public class PainelDisciplinas extends JPanel implements IPainelDisciplinas {
 	private CardLayout cardLayout;
 	private JPanel painelTroca;
 	private JFormattedTextField formattedTextField;
-	private JTextField codigoProcesso;
+	private JFormattedTextField codigoProcesso;
 	/**
 	 * Create the panel.
 	 * @throws ParseException 
@@ -103,7 +103,7 @@ public class PainelDisciplinas extends JPanel implements IPainelDisciplinas {
 		JLabel lblLblcodigoprocesso = new JLabel("Código do processo");
 		panel_10.add(lblLblcodigoprocesso);
 		
-		codigoProcesso = new JTextField();
+		codigoProcesso = new JFormattedTextField(new MaskFormatter("COD###"));
 		panel_10.add(codigoProcesso);
 		codigoProcesso.setColumns(10);
 		
