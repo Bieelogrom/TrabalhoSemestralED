@@ -119,8 +119,18 @@ public class ProfessorController implements ActionListener, TableActionEvent {
 
 	@Override
 	public void onDelete(int row) {
-		// TODO Auto-generated method stub
-		
+		int deletar = JOptionPane.showConfirmDialog(null, "Deseja excluir?");
+		if(deletar == JOptionPane.YES_OPTION) {
+			try {
+				Lista<Professor> listaDeProfessores = professorRepository.visualizarLista();
+				listaDeProfessores.remove(row);
+				professorRepository.remover(listaDeProfessores);
+				callback.atualizarTabela();
+				JOptionPane.showMessageDialog(null, "Professor excluído com sucesso!");
+			}catch(Exception ex) {
+				JOptionPane.showMessageDialog(null, ex.getMessage());
+			}
+		}
 	}
 
 }
