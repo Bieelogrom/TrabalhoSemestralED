@@ -1,10 +1,15 @@
 package Repository;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 
+import br.edu.fateczl.fila.Fila;
+import model.Curso;
 import model.Inscricao;
 
 public class InscricaoRepository {
@@ -27,16 +32,31 @@ public class InscricaoRepository {
 		}
 		FileWriter fw = new FileWriter(arq, existe);
 		PrintWriter pw = new PrintWriter(fw);
-		criarTabelaInscricao(novaInscricao.getCpfProfessor(),novaInscricao.getCodigoDisciplina());
-		//\r\n adicionado para quebra de linha
 		pw.write(novaInscricao.toString()+"\r\n");
 		pw.flush();
 		pw.close();
 		fw.close();
 	}
 
-	private void criarTabelaInscricao(String cpf, String cod) {
-		// TODO Auto-generated method stub
-		
+	public Fila<Inscricao> visualizarFila() throws Exception {
+		Fila<Inscricao> filaDeInscricoes = new Fila<>();
+		String path = System.getProperty("user.home") + File.separator + PASTA;
+		File arq = new File(path, ARQUIVO);
+		if(arq.exists() && arq.isFile()) {
+			FileInputStream fis = new FileInputStream(arq);
+			InputStreamReader isr = new InputStreamReader(fis);
+			BufferedReader buffer = new BufferedReader(isr);
+			String linha = buffer.readLine();
+			while(linha != null) {
+				String[] inscricao = linha.split(";");
+				Inscricao cursoDaLista = new Inscricao(inscricao[0], inscricao[1]);
+				filaDeInscricoes.insert(cursoDaLista);
+				linha = buffer.readLine();
+			}
+			buffer.close();
+			isr.close();
+			fis.close();
+		}
+		return filaDeInscricoes;
 	}
 }

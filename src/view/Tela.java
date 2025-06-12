@@ -51,11 +51,14 @@ public class Tela extends JFrame {
 		
 		PainelDisciplinas painelDisciplinas = new PainelDisciplinas();
 		PainelCursos painelCursos = new PainelCursos();
+		PainelInscricoes painelInscricoes = new PainelInscricoes();
+		//PainelInscricoesPorDisciplina painelInscricoesPorDisciplina = new PainelInscricoesPorDisciplina();
 	
 		tabbedPane.addTab("Cursos", null, painelCursos, null);
 		tabbedPane.addTab("Disciplinas", null, painelDisciplinas, null);
 		tabbedPane.addTab("Professores", null, new PainelProfessores(), null);
-		tabbedPane.addTab("Inscrições", null, new PainelInscricoes(), null);
+		tabbedPane.addTab("Inscrições", null, painelInscricoes, null);
+		//tabbedPane.addTab("Inscricões por disciplina", null, painelInscricoesPorDisciplina, null);
 		
 		
 		/*
@@ -77,6 +80,14 @@ public class Tela extends JFrame {
 					e1.printStackTrace();
 				}
 			}
+			if("Inscrições".equals(tabTitle)) {
+				try {
+					painelInscricoes.atualizarTabela();
+				}catch(Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+		
 		});
 	}
 

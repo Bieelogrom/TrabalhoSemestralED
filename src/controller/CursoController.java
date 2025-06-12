@@ -6,6 +6,7 @@ import java.io.IOException;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
@@ -28,14 +29,14 @@ public class CursoController implements ActionListener, TableActionEvent {
 	//Obriga o usuário a digitar o código do curso dentro do padrão.
 	private String patternCodigoCurso = "^[A-Za-z]{3}[0-9]{3}$"; 
 	private JButton btnSalvarCurso;
-	private JTextField txtfCodigoCurso;
+	private JFormattedTextField txtfCodigoCurso;
 	private JTextField txtfNomeCurso;
 	private JComboBox<String> comboxareaconhecimento;
 	private CursoRepository cursoRepository;
 	private IPainelCursos callback;
 	private DisciplinaController disciplinaController;
 	
-	public CursoController(JButton btnSalvarCurso, JTextField txtfCodigoCurso, JTextField txtfNomeCurso, JComboBox<String> comboxareaconhecimento, IPainelCursos callback) {
+	public CursoController(JButton btnSalvarCurso, JFormattedTextField txtfCodigoCurso, JTextField txtfNomeCurso, JComboBox<String> comboxareaconhecimento, IPainelCursos callback) {
 		this.btnSalvarCurso = btnSalvarCurso;
 		this.txtfCodigoCurso = txtfCodigoCurso;
 		this.txtfNomeCurso = txtfNomeCurso;

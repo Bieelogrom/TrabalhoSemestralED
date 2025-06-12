@@ -24,16 +24,15 @@ public class DisciplinaController implements ActionListener, TableActionEvent  {
 	private String patternCodigoDisciplina = "^[A-Za-z]{3}[0-9]{3}$"; 
 	private CursoRepository cursoRepository;
 	private IPainelDisciplinas callback;
-	private JTextField codigoDisciplina;
+	private JFormattedTextField codigoDisciplina;
 	private JTextField nomeDisciplina;
 	private JComboBox diaDaSemanaDisciplina;
 	private JTextField quantidadeHorasCurso;
 	private JComboBox cursoDisciplina;
 	private JFormattedTextField horarioDisciplina;
 	private DisciplinaRepository disciplinaRepository;
-	private JFormattedTextField codigoProcesso;
 	
-	public DisciplinaController(IPainelDisciplinas callback, JTextField codigoDisciplina, JTextField nomeDisciplina, JComboBox diaDaSemanaDisciplina, JTextField quantidadeHorasCurso, JComboBox cursoDisciplina, JFormattedTextField horarioDisciplina, JFormattedTextField codigoProcesso) {
+	public DisciplinaController(IPainelDisciplinas callback, JFormattedTextField codigoDisciplina, JTextField nomeDisciplina, JComboBox diaDaSemanaDisciplina, JTextField quantidadeHorasCurso, JComboBox cursoDisciplina, JFormattedTextField horarioDisciplina) {
 		this.cursoRepository = new CursoRepository();
 		this.callback = callback;
 		this.codigoDisciplina = codigoDisciplina;
@@ -43,7 +42,6 @@ public class DisciplinaController implements ActionListener, TableActionEvent  {
 		this.cursoDisciplina = cursoDisciplina;
 		this.horarioDisciplina = horarioDisciplina;
 		this.disciplinaRepository = new DisciplinaRepository();
-		this.codigoProcesso = codigoProcesso;
 	}
 	
 	public DisciplinaController() {
@@ -68,7 +66,6 @@ public class DisciplinaController implements ActionListener, TableActionEvent  {
 			String nome = nomeDisciplina.getText();
 			String diaDaSemana = (String) diaDaSemanaDisciplina.getSelectedItem();
 			String horario = horarioDisciplina.getText();
-			String processo = codigoProcesso.getText();
 			
 			int quantidadeHoras;
 			try {
@@ -85,11 +82,8 @@ public class DisciplinaController implements ActionListener, TableActionEvent  {
 			if(nome.isBlank()) {
 				throw new IllegalArgumentException("Digite um nome válido para a disciplina!");
 			}
-			if(processo.length() > 6) {
-				throw new IllegalArgumentException("Digite um código de processo válido para a disciplina!");
-			}
 			
-			Disciplina novaDisciplina = new Disciplina(codigo,processo,nome,diaDaSemana,horario,quantidadeHoras,curso);
+			Disciplina novaDisciplina = new Disciplina(codigo,nome,diaDaSemana,horario,quantidadeHoras,curso);
 			disciplinaRepository.salvar(novaDisciplina);
 			callback.limparTextos();
 			JOptionPane.showMessageDialog(null, "Disciplina cadastrado com sucesso!");

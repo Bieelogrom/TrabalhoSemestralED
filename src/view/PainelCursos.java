@@ -8,6 +8,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.MaskFormatter;
 
 import br.edu.fateczl.fila.Fila;
 import controller.CursoController;
@@ -18,10 +19,13 @@ import view.elementos.TableActionCellEditor;
 import view.elementos.TableActionCellRender;
 
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Component;
+import java.text.ParseException;
+
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
@@ -29,7 +33,7 @@ import javax.swing.SwingConstants;
 public class PainelCursos extends JPanel implements IPainelCursos {
 
 	private static final long serialVersionUID = 1L;
-	private JTextField txtfCodigoCurso;
+	private JFormattedTextField txtfCodigoCurso;
 	private JTextField txtfNomeCurso;
 	private JComboBox<String> comboxareaconhecimento; 
 	private CursoController cursoController;
@@ -38,8 +42,9 @@ public class PainelCursos extends JPanel implements IPainelCursos {
 
 	/**
 	 * Create the panel.
+	 * @throws ParseException 
 	 */
-	public PainelCursos() {
+	public PainelCursos() throws ParseException {
         setLayout(new BorderLayout());
         setBorder(new EmptyBorder(10, 10, 10, 10));
 
@@ -57,7 +62,7 @@ public class PainelCursos extends JPanel implements IPainelCursos {
 	}
 	
 	
-	private JPanel formularioCadastroCursos() {
+	private JPanel formularioCadastroCursos() throws ParseException {
 		JPanel panel = new JPanel();
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 		
@@ -72,7 +77,7 @@ public class PainelCursos extends JPanel implements IPainelCursos {
 		JLabel lblCodigoCurso = new JLabel("Código do Curso");
 		panel_t.add(lblCodigoCurso);
 		
-		txtfCodigoCurso = new JTextField();
+		txtfCodigoCurso = new JFormattedTextField(new MaskFormatter("UUU###"));
 		txtfCodigoCurso.setToolTipText("Digite algo tipo: MAT132 ou AOC110");
 		panel_t.add(txtfCodigoCurso);
 		txtfCodigoCurso.setColumns(10);

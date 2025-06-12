@@ -47,8 +47,8 @@ public class DisciplinaRepository {
 			String linha = buffer.readLine();
 			while(linha != null) {
 				String[] disciplina = linha.split(";");
-				Disciplina disciplinaDaLista = new Disciplina(disciplina[0],disciplina[1],disciplina[2],disciplina[3],disciplina[4],Integer.parseInt(disciplina[5]),disciplina[6]);
-				filaDeDisciplinas.insert(disciplinaDaLista);
+				Disciplina disciplinaDaFila = new Disciplina(disciplina[0],disciplina[1],disciplina[2],disciplina[3],Integer.parseInt(disciplina[4]),disciplina[5]);
+				filaDeDisciplinas.insert(disciplinaDaFila);
 				linha = buffer.readLine();
 			}
 			buffer.close();
@@ -69,7 +69,7 @@ public class DisciplinaRepository {
 			String linha = buffer.readLine();
 			while(linha != null) {
 				String[] disciplina = linha.split(";");
-				Disciplina disciplinaDaLista = new Disciplina(disciplina[0],disciplina[1],disciplina[2],disciplina[3],disciplina[4],Integer.parseInt(disciplina[5]),disciplina[6]);
+				Disciplina disciplinaDaLista = new Disciplina(disciplina[0],disciplina[1],disciplina[2],disciplina[3],Integer.parseInt(disciplina[4]),disciplina[5]);
 				listaDeDisciplinas.addLast(disciplinaDaLista);
 				linha = buffer.readLine();
 			}

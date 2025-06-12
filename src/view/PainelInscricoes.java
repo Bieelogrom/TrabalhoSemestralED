@@ -19,14 +19,21 @@ import br.edu.fateczl.fila.Fila;
 import controller.InscricaoController;
 import model.Inscricao;
 import view.elementos.IPainelInscricoes;
+import view.elementos.TableActionCellEditor;
+import view.elementos.TableActionCellRender;
+import view.elementos.TableActionEvent;
+import java.awt.Component;
+import javax.swing.Box;
 
 public class PainelInscricoes extends JPanel implements IPainelInscricoes {
 
 	private static final long serialVersionUID = 1L;
 	private JTable table;
-	private JFormattedTextField txtfCpfProfessor;
-	private JFormattedTextField comboBoxCodigoDisciplina;
+	private JComboBox<String> txtfCpfProfessor;
+	private JComboBox<String> comboBoxCodigoDisciplina;
+	private JFormattedTextField textField;
 	private InscricaoController inscricaoController;
+	private DefaultTableModel tableModel;
 
 	/**
 	 * Create the panel.
@@ -37,9 +44,14 @@ public class PainelInscricoes extends JPanel implements IPainelInscricoes {
 		
 		JPanel panel_3 = new JPanel();
 		add(panel_3);
+		panel_3.setLayout(new BoxLayout(panel_3, BoxLayout.X_AXIS));
+		
+		Component horizontalStrut_3 = Box.createHorizontalStrut(20);
+		panel_3.add(horizontalStrut_3);
 		
 		JPanel panel_2 = new JPanel();
 		panel_3.add(panel_2);
+		panel_2.setLayout(new BoxLayout(panel_2, BoxLayout.X_AXIS));
 		
 		JPanel panel = new JPanel();
 		panel_2.add(panel);
@@ -48,8 +60,11 @@ public class PainelInscricoes extends JPanel implements IPainelInscricoes {
 		JLabel lblCpfProfessor = new JLabel("CPF do professor");
 		panel.add(lblCpfProfessor);
 		
-		txtfCpfProfessor = new JFormattedTextField(new MaskFormatter("###.###.###-##"));
+		txtfCpfProfessor = new JComboBox();
 		panel.add(txtfCpfProfessor);
+		
+		Component horizontalStrut_2 = Box.createHorizontalStrut(20);
+		panel_2.add(horizontalStrut_2);
 		
 		JPanel panel_1 = new JPanel();
 		panel_2.add(panel_1);
@@ -58,8 +73,14 @@ public class PainelInscricoes extends JPanel implements IPainelInscricoes {
 		JLabel lblCdigoDaDisciplina = new JLabel("Código da disciplina");
 		panel_1.add(lblCdigoDaDisciplina);
 		
-		comboBoxCodigoDisciplina = new JFormattedTextField(new MaskFormatter("UUU###"));
+		/*
+		 * Colocar máscaras em inputs no Java é muito mais fácil que um html com javascript.
+		 */
+		comboBoxCodigoDisciplina = new JComboBox();
 		panel_1.add(comboBoxCodigoDisciplina);
+		
+		Component horizontalStrut_1 = Box.createHorizontalStrut(20);
+		panel_3.add(horizontalStrut_1);
 		
 		JButton btnInscreverProfessor = new JButton("Inscrever professor");
 		panel_3.add(btnInscreverProfessor);
@@ -72,14 +93,33 @@ public class PainelInscricoes extends JPanel implements IPainelInscricoes {
 			new Object[][] {
 			},
 			new String[] {
-				"Disciplina", "Inscritos", "Op\u00E7\u00F5es"
+				"Disciplina", "Professor", "Op\u00E7\u00F5es"
 			}
 		));
+		table.setRowHeight(40);
+		tableModel = (DefaultTableModel) table.getModel();
+		TableActionEvent event = inscricaoController;
+        table.getColumnModel().getColumn(2).setCellRenderer(new TableActionCellRender());
+        table.getColumnModel().getColumn(2).setCellEditor(new TableActionCellEditor(inscricaoController));
 		table.getColumnModel().getColumn(1).setResizable(false);
 		table.getColumnModel().getColumn(2).setResizable(false);
 		scrollPane.setViewportView(table);
 		
-		this.inscricaoController = new InscricaoController(txtfCpfProfessor,comboBoxCodigoDisciplina);
+		Component horizontalStrut = Box.createHorizontalStrut(20);
+		panel_2.add(horizontalStrut);
+	
+		JPanel panel_4 = new JPanel();
+		panel_2.add(panel_4);
+		panel_4.setLayout(new BoxLayout(panel_4, BoxLayout.Y_AXIS));
+		
+		JLabel lblCdigo = new JLabel("Código do processo");
+		panel_4.add(lblCdigo);
+		
+		textField = new JFormattedTextField(new MaskFormatter("COD###"));
+		panel_4.add(textField);
+		textField.setColumns(5);
+		
+		this.inscricaoController = new InscricaoController(txtfCpfProfessor,comboBoxCodigoDisciplina,textField);
 		
 		btnInscreverProfessor.addActionListener(inscricaoController);
 	}
@@ -95,9 +135,16 @@ public class PainelInscricoes extends JPanel implements IPainelInscricoes {
 	}
 
 	@Override
-	public void atualizarTabela() {
-		// TODO Auto-generated method stub
-		
+	public void atualizarTabela() throws Exception {
+		Fila<Inscricao> filaDeInscricoes = inscricaoController.enfileirarInscricoes();
+		tableModel.setRowCount(0);
+		while(!filaDeInscricoes.isEmpty()) {
+			Inscricao inscricao = filaDeInscricoes.remove();
+			tableModel.addRow(new Object[] {
+					inscricao.getCodigoDisciplina(),
+					inscricao.getCpfProfessor()
+			});
+		}
 	}
 
 }

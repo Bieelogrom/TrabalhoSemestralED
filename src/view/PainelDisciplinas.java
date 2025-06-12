@@ -35,7 +35,7 @@ import javax.swing.JFormattedTextField;
 public class PainelDisciplinas extends JPanel implements IPainelDisciplinas {
 
 	private static final long serialVersionUID = 1L;
-	private JTextField textField;
+	private JFormattedTextField textField;
 	private JTextField textField_1;
 	private JTextField txtfQuantidadeHoras;
 	private JComboBox<String> comboboxCursos;
@@ -43,7 +43,6 @@ public class PainelDisciplinas extends JPanel implements IPainelDisciplinas {
 	private CardLayout cardLayout;
 	private JPanel painelTroca;
 	private JFormattedTextField formattedTextField;
-	private JFormattedTextField codigoProcesso;
 	/**
 	 * Create the panel.
 	 * @throws ParseException 
@@ -89,23 +88,13 @@ public class PainelDisciplinas extends JPanel implements IPainelDisciplinas {
 		JLabel lblCodigoDisciplina = new JLabel("Código da disciplina");
 		panel_9.add(lblCodigoDisciplina);
 		
-		textField = new JTextField();
+		textField = new JFormattedTextField(new MaskFormatter("UUU###"));
 		panel_9.add(textField);
 		textField.setColumns(10);
-		
-		Component horizontalStrut_2 = Box.createHorizontalStrut(20);
-		panel_3.add(horizontalStrut_2);
 		
 		JPanel panel_10 = new JPanel();
 		panel_3.add(panel_10);
 		panel_10.setLayout(new BoxLayout(panel_10, BoxLayout.Y_AXIS));
-		
-		JLabel lblLblcodigoprocesso = new JLabel("Código do processo");
-		panel_10.add(lblLblcodigoprocesso);
-		
-		codigoProcesso = new JFormattedTextField(new MaskFormatter("COD###"));
-		panel_10.add(codigoProcesso);
-		codigoProcesso.setColumns(10);
 		
 		Component verticalStrut_1 = Box.createVerticalStrut(20);
 		panel_5.add(verticalStrut_1);
@@ -190,7 +179,7 @@ public class PainelDisciplinas extends JPanel implements IPainelDisciplinas {
 		formattedTextField = new JFormattedTextField(new MaskFormatter("##:##/##:##"));
 		panel_8.add(formattedTextField);
 		
-		this.disciplinaController = new DisciplinaController(this, textField, textField_1, comboboxdiasemana, txtfQuantidadeHoras, comboboxCursos, formattedTextField, codigoProcesso);
+		this.disciplinaController = new DisciplinaController(this, textField, textField_1, comboboxdiasemana, txtfQuantidadeHoras, comboboxCursos, formattedTextField);
 		
 		JButton btnCadastrarNovaDisciplina = new JButton("Cadastrar nova disciplina");
 		panel_7.add(btnCadastrarNovaDisciplina);

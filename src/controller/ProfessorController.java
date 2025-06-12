@@ -35,6 +35,10 @@ public class ProfessorController implements ActionListener, TableActionEvent {
 		this.professorRepository = new ProfessorRepository();
 		this.callback = callback;
 	}
+	
+	public ProfessorController() {
+		this.professorRepository = new ProfessorRepository();
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
