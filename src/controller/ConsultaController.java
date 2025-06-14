@@ -46,8 +46,7 @@ public class ConsultaController implements ActionListener {
 			for(int j = 0; j < listaDeInscricoes.size(); j++) {
 				Inscricao ins = listaDeInscricoes.get(j);
 				if(prof.getCpf().equals(ins.getCpfProfessor())) {
-					prof.setCodigoProcesso(ins.getCodigoProcesso());
-					professoresInscritos.addLast(new Professor(prof.getCpf(),prof.getNome(),prof.getArea(),prof.getPontuacao(),prof.getCodigoProcesso()));
+					professoresInscritos.addLast(new Professor(prof.getCpf(),prof.getNome(),prof.getArea(),prof.getPontuacao()));
 					break;
 				}
 			}
@@ -62,7 +61,6 @@ public class ConsultaController implements ActionListener {
 					professorInscrito.getCpf(),
 					professorInscrito.getArea(),
 					professorInscrito.getPontuacao(),
-					professorInscrito.getCodigoProcesso()
 			});
 		}
 	}

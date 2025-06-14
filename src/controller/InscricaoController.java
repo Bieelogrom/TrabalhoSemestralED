@@ -8,11 +8,14 @@ import javax.swing.JComboBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.text.MaskFormatter;
 
 import Repository.InscricaoRepository;
 import br.edu.fateczl.fila.Fila;
 import br.edu.fateczl.gabriel.Lista;
+import model.Disciplina;
 import model.Inscricao;
+import model.Professor;
 import view.elementos.IPainelInscricoes;
 import view.elementos.TableActionEvent;
 
@@ -24,6 +27,8 @@ public class InscricaoController implements ActionListener, TableActionEvent {
 	private JFormattedTextField codigoProcesso;
 	private InscricaoRepository inscricaoRepository;
 	private IPainelInscricoes callback;
+	private DisciplinaController disciplinaController;
+	private ProfessorController professorController;
 	
 	public InscricaoController(JComboBox<String> cpfProfessor, JComboBox<String> codigoDisciplina, JFormattedTextField codigoProcesso, IPainelInscricoes callback) {
 		this.cpfProfessor = cpfProfessor;
@@ -31,10 +36,14 @@ public class InscricaoController implements ActionListener, TableActionEvent {
 		this.codigoProcesso = codigoProcesso;
 		this.callback = callback;
 		this.inscricaoRepository = new InscricaoRepository();
+		this.disciplinaController = new DisciplinaController();
+		this.professorController = new ProfessorController();
 	}
 	
 	public InscricaoController() {
 		this.inscricaoRepository = new InscricaoRepository();
+		this.disciplinaController = new DisciplinaController();
+		this.professorController = new ProfessorController();
 	}
 
 
@@ -91,12 +100,73 @@ public class InscricaoController implements ActionListener, TableActionEvent {
 
 	@Override
 	public void onEdit(int row) {
-		System.out.println("Gabriel");
+		int editar = JOptionPane.showConfirmDialog(null, "Deseja editar?");
+		if(editar == JOptionPane.YES_OPTION) {
+			try {
+				Lista<Inscricao> inscritos = listaInscricoes();
+				Lista<Disciplina> disciplinas = disciplinaController.listarDisciplinas();
+				Lista<Professor> professores = professorController.listarProfessor();
+				Inscricao inscrito = inscritos.get(row);
+				
+				String codigoDisciplinaC;
+			
+				String[] codigosDasDisciplinas = new String[disciplinas.size()];
+				for(int i = 0; i < disciplinas.size(); i++) {
+					codigosDasDisciplinas[i] = disciplinas.get(i).getCodigoDisciplina();
+				}
+				
+				String[] cpfDosProfessores = new String[professores.size()];
+				for(int i = 0; i < professores.size(); i++) {
+					cpfDosProfessores[i] = professores.get(i).getCpf();
+				}
+				
+				JComboBox<String> comboBoxCodigoDeDisciplinas = new JComboBox<>(codigosDasDisciplinas);
+				comboBoxCodigoDeDisciplinas.setSelectedItem(codigoDisciplina.getSelectedItem());
+				int codigoBox = JOptionPane.showConfirmDialog(null, comboBoxCodigoDeDisciplinas, "Selecione o código da disciplina", JOptionPane.OK_CANCEL_OPTION);
+				if (codigoBox != JOptionPane.OK_OPTION) return;
+				
+				JComboBox<String> comboBoxCpfDoProfessor = new JComboBox<>(cpfDosProfessores);
+				comboBoxCpfDoProfessor.setSelectedItem(cpfProfessor.getSelectedItem());
+				int codigoBox2 = JOptionPane.showConfirmDialog(null, comboBoxCpfDoProfessor, "Selecione o CPF do professor", JOptionPane.OK_CANCEL_OPTION);
+				if (codigoBox2 != JOptionPane.OK_OPTION) return;
+				
+				
+				String cpf;
+				JFormattedTextField campoCpf = new JFormattedTextField(new MaskFormatter("###.###.###-##"));
+				int option = JOptionPane.showConfirmDialog(null,campoCpf,"Digite o CPF do Professor",JOptionPane.OK_CANCEL_OPTION);
+				cpf = campoCpf.getText();
+				if(option != JOptionPane.OK_OPTION) return;
+				
+				listaInscricoes().remove(row);
+				inscricaoRepository.remover(inscritos);
+				
+				inscrito.setCodigoDisciplina((String) comboBoxCodigoDeDisciplinas.getSelectedItem());
+				inscrito.setCodigoProcesso((String) comboBoxCpfDoProfessor.getSelectedItem());
+				inscrito.setCpfProfessor(campoCpf.getText());
+				
+				inscricaoRepository.salvar(inscrito);
+				callback.atualizarTabela();
+				JOptionPane.showMessageDialog(null, "Inscrição editada com sucesso!");
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 	@Override
 	public void onDelete(int row) {
-		// TODO Auto-generated method stub
-		
+		int deletar = JOptionPane.showConfirmDialog(null, "Deseja excluir?");
+		if(deletar == JOptionPane.YES_OPTION) {
+			try {
+				Lista<Inscricao> listaDeInscritos = inscricaoRepository.visualizarLista();
+				listaDeInscritos.remove(row);
+				inscricaoRepository.remover(listaDeInscritos);
+				callback.atualizarTabela();
+				JOptionPane.showMessageDialog(null, "Inscrição excluída com sucesso!");
+			}catch(Exception ex) {
+				JOptionPane.showMessageDialog(null, ex.getMessage());
+			}
+		}
 	}
 }

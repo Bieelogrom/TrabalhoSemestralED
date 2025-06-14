@@ -83,4 +83,17 @@ public class InscricaoRepository {
 		}
 		return listaDeInscricoes;
 	}
+	
+	public void remover(Lista<Inscricao> listaDeInscritos) throws Exception {
+		String path = System.getProperty("user.home") + File.separator + PASTA;
+		File arq = new File(path, ARQUIVO);
+		FileWriter fw = new FileWriter(arq);
+		PrintWriter pw = new PrintWriter(fw);
+		for(int i = 1; i < listaDeInscritos.size(); i++) {
+			pw.write(listaDeInscritos.get(i).toString()+"\r\n");
+		}
+		pw.flush();
+		pw.close();
+		fw.close();
+	}
 }
