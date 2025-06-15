@@ -60,6 +60,7 @@ public class Tela extends JFrame {
 		tabbedPane.addTab("Professores", null, new PainelProfessores(), null);
 		tabbedPane.addTab("Inscrições", null, painelInscricoes, null);
 		tabbedPane.addTab("Consulta", null, painelConsulta, null);
+		tabbedPane.addTab("Processos abertos",null, new PainelProcessosAbertos(),null);
 		
 		
 		/*

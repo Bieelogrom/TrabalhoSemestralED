@@ -57,7 +57,7 @@ public class PainelConsulta extends JPanel implements IPainelConsulta {
 			new Object[][] {
 			},
 			new String[] {
-				"Professor", "CPF", "\u00C1rea", "Pontua\u00E7\u00E3o", "C\u00F3digo do processo", "Op\u00E7\u00F5es"
+				"Professor", "CPF", "\u00C1rea", "Pontua\u00E7\u00E3o"
 			}
 		));
 		table.setRowHeight(40);

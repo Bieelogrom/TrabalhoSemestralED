@@ -7,6 +7,7 @@ import javax.swing.table.DefaultTableModel;
 
 import br.edu.fateczl.gabriel.Lista;
 import model.Inscricao;
+import model.MergeSort;
 import model.Professor;
 
 public class ConsultaController implements ActionListener {
@@ -43,19 +44,50 @@ public class ConsultaController implements ActionListener {
 			Professor prof = listaDeProfessores.get(i);
 			boolean inscrito = false;
 			
-			for(int j = 0; j < listaDeInscricoes.size(); j++) {
-				Inscricao ins = listaDeInscricoes.get(j);
-				if(prof.getCpf().equals(ins.getCpfProfessor())) {
-					professoresInscritos.addLast(new Professor(prof.getCpf(),prof.getNome(),prof.getArea(),prof.getPontuacao()));
-					break;
-				}
+			for (int j = 0; j < listaDeInscricoes.size(); j++) {
+			    Inscricao ins = listaDeInscricoes.get(j);
+			    if (prof.getCpf().equals(ins.getCpfProfessor())) {
+			        boolean jaAdicionado = false;
+			        for (int k = 0; k < professoresInscritos.size(); k++) {
+			            if (professoresInscritos.get(k).getCpf().equals(prof.getCpf())) {
+			                jaAdicionado = true;
+			                break;
+			            }
+			        }
+			        if (!jaAdicionado) {
+			            professoresInscritos.addLast(new Professor(prof.getCpf(), prof.getNome(), prof.getArea(), prof.getPontuacao()));
+			        }
+			        break;
+			    }
 			}
 	
 		}
 		
-		tableModel.setRowCount(0);
+		
+		int[] pontuacoes = new int[professoresInscritos.size()];
 		for(int i = 0; i < professoresInscritos.size(); i++) {
-			Professor professorInscrito = professoresInscritos.get(i);
+			pontuacoes[i] = Math.round(professoresInscritos.get(i).getPontuacao());
+		}
+		
+		MergeSort ms = new MergeSort();		
+		pontuacoes = ms.ordenarArray(pontuacoes, 0, professoresInscritos.size() - 1);
+		
+		Lista<Professor> professoresOrdenados = new Lista<>();
+		boolean[] usados = new boolean[professoresInscritos.size()];
+		
+		for (int i = professoresInscritos.size() - 1; i >= 0; i--) { 
+			for (int j = 0; j < professoresInscritos.size(); j++) {
+				if (!usados[j] && Math.round(professoresInscritos.get(j).getPontuacao()) == pontuacoes[i]) {
+					professoresOrdenados.addLast(professoresInscritos.get(j));
+					usados[j] = true;
+					break;
+				}
+			}
+		}
+		
+		tableModel.setRowCount(0);
+		for(int i = 0; i < professoresOrdenados.size(); i++) {
+			Professor professorInscrito = professoresOrdenados.get(i);
 			tableModel.addRow(new Object[] {
 					professorInscrito.getNome(),
 					professorInscrito.getCpf(),

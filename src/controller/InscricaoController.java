@@ -130,19 +130,19 @@ public class InscricaoController implements ActionListener, TableActionEvent {
 				int codigoBox2 = JOptionPane.showConfirmDialog(null, comboBoxCpfDoProfessor, "Selecione o CPF do professor", JOptionPane.OK_CANCEL_OPTION);
 				if (codigoBox2 != JOptionPane.OK_OPTION) return;
 				
+				String campocodigoprocesso;
+				JFormattedTextField campocodigoprocessos = new JFormattedTextField(new MaskFormatter("UUU###"));
+				int option = JOptionPane.showConfirmDialog(null,campocodigoprocessos,"Digite o horário da disciplina",JOptionPane.OK_CANCEL_OPTION);
+				campocodigoprocesso = campocodigoprocessos.getText();
+				if (option != JOptionPane.OK_OPTION) return;
 				
-				String cpf;
-				JFormattedTextField campoCpf = new JFormattedTextField(new MaskFormatter("###.###.###-##"));
-				int option = JOptionPane.showConfirmDialog(null,campoCpf,"Digite o CPF do Professor",JOptionPane.OK_CANCEL_OPTION);
-				cpf = campoCpf.getText();
-				if(option != JOptionPane.OK_OPTION) return;
 				
 				listaInscricoes().remove(row);
 				inscricaoRepository.remover(inscritos);
 				
 				inscrito.setCodigoDisciplina((String) comboBoxCodigoDeDisciplinas.getSelectedItem());
-				inscrito.setCodigoProcesso((String) comboBoxCpfDoProfessor.getSelectedItem());
-				inscrito.setCpfProfessor(campoCpf.getText());
+				inscrito.setCpfProfessor((String) comboBoxCpfDoProfessor.getSelectedItem());
+				inscrito.setCodigoProcesso(campocodigoprocesso);
 				
 				inscricaoRepository.salvar(inscrito);
 				callback.atualizarTabela();
