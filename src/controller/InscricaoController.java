@@ -55,10 +55,10 @@ public class InscricaoController implements ActionListener, TableActionEvent {
 				inscreverProfessor();
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				JOptionPane.showMessageDialog(null, e1.getMessage());
 			} catch (Exception e1) {
 				// TODO Auto-generated catch block
-				e1.printStackTrace();
+				JOptionPane.showMessageDialog(null, e1.getMessage());
 			}
 		}
 	}
@@ -152,13 +152,13 @@ public class InscricaoController implements ActionListener, TableActionEvent {
 				if (codigoBox2 != JOptionPane.OK_OPTION) return;
 				
 				String campocodigoprocesso;
-				JFormattedTextField campocodigoprocessos = new JFormattedTextField(new MaskFormatter("UUU###"));
+				JFormattedTextField campocodigoprocessos = new JFormattedTextField(new MaskFormatter("COD###"));
 				int option = JOptionPane.showConfirmDialog(null,campocodigoprocessos,"Digite o horário da disciplina",JOptionPane.OK_CANCEL_OPTION);
 				campocodigoprocesso = campocodigoprocessos.getText();
 				if (option != JOptionPane.OK_OPTION) return;
 				
 				
-				listaInscricoes().remove(row);
+				inscritos.remove(row);
 				inscricaoRepository.remover(inscritos);
 				
 				inscrito.setCodigoDisciplina((String) comboBoxCodigoDeDisciplinas.getSelectedItem());
@@ -170,7 +170,7 @@ public class InscricaoController implements ActionListener, TableActionEvent {
 				JOptionPane.showMessageDialog(null, "Inscrição editada com sucesso!");
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				JOptionPane.showMessageDialog(null, e.getMessage());
 			}
 		}
 	}
