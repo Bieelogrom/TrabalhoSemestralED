@@ -9,10 +9,17 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
-public class PainelProcessosAbertos extends JPanel {
+import br.edu.fateczl.gabriel.Lista;
+import controller.InscricaoController;
+import model.Inscricao;
+import view.elementos.IPainelProcessosAbertos;
+
+public class PainelProcessosAbertos extends JPanel implements IPainelProcessosAbertos {
 
 	private static final long serialVersionUID = 1L;
 	private JTable table;
+	private DefaultTableModel tableModel;
+	private InscricaoController inscricaoController;
 	/**
 	 * Create the panel.
 	 */
@@ -30,6 +37,7 @@ public class PainelProcessosAbertos extends JPanel {
 				"CPF do Professor", "Pontua\u00E7\u00E3o", "Data de inscri\u00E7\u00E3o", "C\u00F3digo da disciplina"
 			}
 		) {
+			private static final long serialVersionUID = 1L;
 			boolean[] columnEditables = new boolean[] {
 				true, false, false, false
 			};
@@ -37,10 +45,17 @@ public class PainelProcessosAbertos extends JPanel {
 				return columnEditables[column];
 			}
 		});
+		tableModel = (DefaultTableModel) table.getModel();
 		table.getColumnModel().getColumn(1).setResizable(false);
 		table.getColumnModel().getColumn(2).setResizable(false);
 		table.getColumnModel().getColumn(3).setResizable(false);
 		scrollPane.setViewportView(table);
+	}
+	
+	@Override
+	public void atualizarTabela() throws Exception {
+		
+		
 	}
 
 }

@@ -82,11 +82,32 @@ public class InscricaoController implements ActionListener, TableActionEvent {
 			throw new IllegalArgumentException("Digite um código de processo válido!");
 		}
 		
+		if(!professorController.professorExiste(cpf)) {
+			 JOptionPane.showMessageDialog(null, "Professor não encontrado.");
+			 return;
+		}
+		
+		if(jaInscrito(cpf, codDisc)) {
+			 JOptionPane.showMessageDialog(null, "Professor já está inscrito nessa disciplina!.");
+			 return;
+		}
+		
 		Inscricao novaInscricao = new Inscricao(cpf, codDisc, codProc);
 		inscricaoRepository.salvar(novaInscricao);
 		callback.atualizarTabela();
 	}
 
+	
+	private boolean jaInscrito(String cpf, String codDisciplina) throws Exception {
+		Lista<Inscricao> listaDeIncricoes = listaInscricoes();
+		for(int i = 0; i < listaDeIncricoes.size(); i++) {
+			Inscricao inscrito = listaDeIncricoes.get(i);
+			if(inscrito.getCpfProfessor().equals(cpf) && codDisciplina.equals(inscrito.getCodigoDisciplina())) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 	public Fila<Inscricao> enfileirarInscricoes() throws Exception {
 		Fila<Inscricao> filaDeInscricoes = inscricaoRepository.visualizarFila();
@@ -169,4 +190,5 @@ public class InscricaoController implements ActionListener, TableActionEvent {
 			}
 		}
 	}
+
 }

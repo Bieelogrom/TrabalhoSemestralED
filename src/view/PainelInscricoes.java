@@ -171,5 +171,5 @@ public class PainelInscricoes extends JPanel implements IPainelInscricoes {
 			});
 		}
 	}
-
+	
 }

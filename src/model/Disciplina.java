@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Objects;
+
 public class Disciplina {
 	private String codigoDisciplina;
 	private String nomeDisciplina;
@@ -64,6 +66,16 @@ public class Disciplina {
 
 	public void setCurso(String curso) {
 		this.curso = curso;
+	}
+	
+	
+
+	public int hashCode(int tamanho) {
+		int soma = 0;
+		for(char c : codigoDisciplina.toCharArray()) {
+			soma += c;
+		}
+		return soma % tamanho;
 	}
 
 	@Override

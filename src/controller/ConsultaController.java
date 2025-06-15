@@ -5,7 +5,10 @@ import java.awt.event.ActionListener;
 
 import javax.swing.table.DefaultTableModel;
 
+import br.edu.fateczl.fila.Fila;
 import br.edu.fateczl.gabriel.Lista;
+import model.Dicionario;
+import model.Disciplina;
 import model.Inscricao;
 import model.MergeSort;
 import model.Professor;
@@ -15,10 +18,12 @@ public class ConsultaController implements ActionListener {
 	private InscricaoController inscricaoController;
 	private ProfessorController professorController;
 	private DefaultTableModel tableModel;
+	private DisciplinaController disciplinaController;
 	
 	public ConsultaController(DefaultTableModel tableModel) {
 		this.inscricaoController = new InscricaoController();
 		this.professorController = new ProfessorController();
+		this.disciplinaController = new DisciplinaController();
 		this.tableModel = tableModel;
 	}
 
@@ -96,5 +101,43 @@ public class ConsultaController implements ActionListener {
 			});
 		}
 	}
+	
+	//Estou cansado chefe
+	public Dicionario carregarTabelaHash() throws Exception {
+	    Fila<Inscricao> filaDeInscricoes = inscricaoController.enfileirarInscricoes();
+	    Lista<String> codigosAtivos = new Lista<>();
+
+	    while (!filaDeInscricoes.isEmpty()) {
+	        Inscricao ins = filaDeInscricoes.remove();
+	        String codDisc = ins.getCodigoDisciplina();
+	        
+	        boolean duplicado = false;
+	        for (int i = 0; i < codigosAtivos.size(); i++) {
+	            if (codigosAtivos.get(i).equals(codDisc)) {
+	                duplicado = true;
+	                break;
+	            }
+	        }
+	        if (!duplicado) {
+	            codigosAtivos.addLast(codDisc);
+	        }
+	    }
+
+	    Fila<Disciplina> filaDisciplinas = disciplinaController.enfileirarDisciplinas();
+	    Dicionario dicionario = new Dicionario(); // tamanho = 13 por padrão
+
+	    while (!filaDisciplinas.isEmpty()) {
+	        Disciplina d = filaDisciplinas.remove();
+	        for (int i = 0; i < codigosAtivos.size(); i++) {
+	            if (d.getCodigoDisciplina().equals(codigosAtivos.get(i))) {
+	                dicionario.adicionarDisciplina(d);
+	                break;
+	            }
+	        }
+	    }
+
+	    return dicionario;
+	}
+
 	
 }
