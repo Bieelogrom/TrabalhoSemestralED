@@ -37,7 +37,7 @@ public class PainelProfessores extends JPanel implements IPainelProfessores {
 	private JFormattedTextField txtfCpfProfessor;
 	private JTextField txtfNomeProfessor;
 	private JComboBox txtfAreaInteresse;
-	private JTextField txtfPontuação;
+	private JFormattedTextField txtfPontuação;
 	private CardLayout cardLayout;
 	private JPanel painelTroca;
 	private ProfessorController professorController;
@@ -121,7 +121,7 @@ public class PainelProfessores extends JPanel implements IPainelProfessores {
 		JLabel lblPontuao = new JLabel("Pontuação");
 		panel_5.add(lblPontuao);
 		
-		txtfPontuação = new JTextField();
+		txtfPontuação = new JFormattedTextField(new MaskFormatter("###"));
 		panel_5.add(txtfPontuação);
 		
 		Component verticalStrut_3 = Box.createVerticalStrut(20);

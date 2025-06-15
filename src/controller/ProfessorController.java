@@ -22,12 +22,12 @@ public class ProfessorController implements ActionListener, TableActionEvent {
 	private JFormattedTextField cpfProfessor;
 	private JTextField nomeProfessor;
 	private JComboBox<String> areaConhecimento;
-	private JTextField pontuacao;
+	private JFormattedTextField pontuacao;
 	private ProfessorRepository professorRepository;
 	private IPainelProfessores callback;
 	
 	public ProfessorController(JFormattedTextField cpfProfessor, JTextField nomeProfessor,
-			JComboBox<String> areaConhecimento, JTextField pontuacao, IPainelProfessores callback) {
+			JComboBox<String> areaConhecimento, JFormattedTextField pontuacao, IPainelProfessores callback) {
 		this.cpfProfessor = cpfProfessor;
 		this.nomeProfessor = nomeProfessor;
 		this.areaConhecimento = areaConhecimento;
@@ -53,7 +53,7 @@ public class ProfessorController implements ActionListener, TableActionEvent {
 			String cpf = cpfProfessor.getText();
 			String nome = nomeProfessor.getText();
 			String area = (String) areaConhecimento.getSelectedItem();
-			float pontuacaoP = Float.parseFloat(pontuacao.getText().replace(",", "."));
+			float pontuacaoP = Float.parseFloat(pontuacao.getText());
 			
 			if(pontuacaoP < 0 || pontuacaoP > 100) {
 				throw new IllegalArgumentException("Digite uma pontuação válida!");
