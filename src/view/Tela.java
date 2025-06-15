@@ -54,13 +54,14 @@ public class Tela extends JFrame {
 		PainelCursos painelCursos = new PainelCursos();
 		PainelInscricoes painelInscricoes = new PainelInscricoes();
 		PainelConsulta painelConsulta = new PainelConsulta();
+		PainelProcessosAbertos painelProcessosAbertos = new PainelProcessosAbertos();
 
 		tabbedPane.addTab("Cursos", null, painelCursos, null);
 		tabbedPane.addTab("Disciplinas", null, painelDisciplinas, null);
 		tabbedPane.addTab("Professores", null, new PainelProfessores(), null);
 		tabbedPane.addTab("Inscrições", null, painelInscricoes, null);
 		tabbedPane.addTab("Consulta", null, painelConsulta, null);
-		tabbedPane.addTab("Processos abertos",null, new PainelProcessosAbertos(),null);
+		tabbedPane.addTab("Processos abertos",null, painelProcessosAbertos,null);
 		
 		
 		/*
@@ -93,6 +94,13 @@ public class Tela extends JFrame {
 			if("Consulta".equals(tabTitle)) {
 				try {
 					painelConsulta.carregarComboBox();
+				}catch(Exception e1) {
+					JOptionPane.showMessageDialog(null, e1.getMessage());
+				}
+			}
+			if("Processos abertos".equals(tabTitle)) {
+				try {
+					painelProcessosAbertos.atualizarTabela();
 				}catch(Exception e1) {
 					JOptionPane.showMessageDialog(null, e1.getMessage());
 				}

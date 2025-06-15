@@ -2,23 +2,32 @@ package model;
 
 import br.edu.fateczl.gabriel.Lista;
 
+//Não sei outro nome para isso
 public class Dicionario {
-	Lista[] tabelaHashDicionario;
+	private Lista[] tabelaHashDicionario;
 	
 	public Dicionario() {
-		tabelaHashDicionario = new Lista[13];
+		setTabelaHashDicionario(new Lista[13]);
 		inicializarTabelaHash();
 	}
 
 	private void inicializarTabelaHash() {
-		int tamanho = tabelaHashDicionario.length;
+		int tamanho = getTabelaHashDicionario().length;
 		for(int i = 0; i < tamanho; i++) {
-			tabelaHashDicionario[i] = new Lista<>();
+			getTabelaHashDicionario()[i] = new Lista<>();
 		}
 	}
 	
 	public void adicionarDisciplina(Disciplina disc) {
-		int posicao = disc.hashCode(tabelaHashDicionario.length);
-		tabelaHashDicionario[posicao].addFirst(disc);
+		int posicao = disc.hashCode(getTabelaHashDicionario().length);
+		getTabelaHashDicionario()[posicao].addFirst(disc);
+	}
+
+	public Lista[] getTabelaHashDicionario() {
+		return tabelaHashDicionario;
+	}
+
+	public void setTabelaHashDicionario(Lista[] tabelaHashDicionario) {
+		this.tabelaHashDicionario = tabelaHashDicionario;
 	}
 }

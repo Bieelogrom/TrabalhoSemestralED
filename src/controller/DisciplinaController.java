@@ -16,6 +16,7 @@ import br.edu.fateczl.fila.Fila;
 import br.edu.fateczl.gabriel.Lista;
 import model.Curso;
 import model.Disciplina;
+import model.Inscricao;
 import view.elementos.IPainelDisciplinas;
 import view.elementos.TableActionEvent;
 
@@ -31,6 +32,7 @@ public class DisciplinaController implements ActionListener, TableActionEvent  {
 	private JComboBox cursoDisciplina;
 	private JFormattedTextField horarioDisciplina;
 	private DisciplinaRepository disciplinaRepository;
+	private InscricaoController inscricaoController;
 	
 	public DisciplinaController(IPainelDisciplinas callback, JFormattedTextField codigoDisciplina, JTextField nomeDisciplina, JComboBox diaDaSemanaDisciplina, JTextField quantidadeHorasCurso, JComboBox cursoDisciplina, JFormattedTextField horarioDisciplina) {
 		this.cursoRepository = new CursoRepository();
@@ -42,11 +44,13 @@ public class DisciplinaController implements ActionListener, TableActionEvent  {
 		this.cursoDisciplina = cursoDisciplina;
 		this.horarioDisciplina = horarioDisciplina;
 		this.disciplinaRepository = new DisciplinaRepository();
+		this.inscricaoController = new InscricaoController();
 	}
 	
 	public DisciplinaController() {
 		this.cursoRepository = new CursoRepository();
 		this.disciplinaRepository = new DisciplinaRepository();
+		this.inscricaoController = new InscricaoController();
 	}
 
 	@Override
@@ -189,6 +193,8 @@ public class DisciplinaController implements ActionListener, TableActionEvent  {
 		if(deletar == JOptionPane.YES_OPTION) {
 			try {
 				Lista<Disciplina> listaDeDisciplinas = listarDisciplinas();
+				Disciplina disciplinaParaApagar = listaDeDisciplinas.get(row);
+				verificaProcessosVinculados(disciplinaParaApagar);
 				listaDeDisciplinas.remove(row);
 				disciplinaRepository.remover(listaDeDisciplinas);
 				callback.atualizarTabela();
@@ -199,6 +205,18 @@ public class DisciplinaController implements ActionListener, TableActionEvent  {
 		}
 	}
 	
+	private void verificaProcessosVinculados(Disciplina disciplinaParaApagar) throws Exception {
+		Lista<Inscricao> listaDeInscricoes = inscricaoController.listaInscricoes();
+		for(int i = 0; i < listaDeInscricoes.size(); i++) {
+			Inscricao insc = listaDeInscricoes.get(i);
+			if(disciplinaParaApagar.getCodigoDisciplina().equals(insc.getCodigoDisciplina())) {
+				listaDeInscricoes.remove(i);
+				i--;
+			}
+		}
+		inscricaoController.getInscricaoRepository().remover(listaDeInscricoes);
+	}
+
 	public DisciplinaRepository getDisciplinaRepository() {
 		return this.disciplinaRepository;
 	}

@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.text.MaskFormatter;
 
+import Repository.DisciplinaRepository;
 import Repository.InscricaoRepository;
 import br.edu.fateczl.fila.Fila;
 import br.edu.fateczl.gabriel.Lista;
@@ -42,7 +43,6 @@ public class InscricaoController implements ActionListener, TableActionEvent {
 	
 	public InscricaoController() {
 		this.inscricaoRepository = new InscricaoRepository();
-		this.disciplinaController = new DisciplinaController();
 		this.professorController = new ProfessorController();
 	}
 
@@ -191,4 +191,7 @@ public class InscricaoController implements ActionListener, TableActionEvent {
 		}
 	}
 
+	public InscricaoRepository getInscricaoRepository() {
+		return this.inscricaoRepository;
+	}
 }
