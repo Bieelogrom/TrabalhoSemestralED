@@ -3,6 +3,7 @@ package controller;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JComboBox;
 import javax.swing.table.DefaultTableModel;
 
 import br.edu.fateczl.fila.Fila;
@@ -19,12 +20,14 @@ public class ConsultaController implements ActionListener {
 	private ProfessorController professorController;
 	private DefaultTableModel tableModel;
 	private DisciplinaController disciplinaController;
+	private JComboBox<String> comboBoxDisciplina;
 	
-	public ConsultaController(DefaultTableModel tableModel) {
+	public ConsultaController(DefaultTableModel tableModel, JComboBox<String> comboBoxDisciplina) {
 		this.inscricaoController = new InscricaoController();
 		this.professorController = new ProfessorController();
 		this.disciplinaController = new DisciplinaController();
 		this.tableModel = tableModel;
+		this.comboBoxDisciplina = comboBoxDisciplina;
 	}
 
 	@Override
@@ -41,6 +44,7 @@ public class ConsultaController implements ActionListener {
 	}
 
 	private void consultarProcesso() throws Exception {
+		tableModel.setRowCount(0);
 		Lista<Inscricao> listaDeInscricoes = inscricaoController.listaInscricoes();
 		Lista<Professor> listaDeProfessores = professorController.listarProfessor();
 		
@@ -51,7 +55,7 @@ public class ConsultaController implements ActionListener {
 			
 			for (int j = 0; j < listaDeInscricoes.size(); j++) {
 			    Inscricao ins = listaDeInscricoes.get(j);
-			    if (prof.getCpf().equals(ins.getCpfProfessor())) {
+			    if (prof.getCpf().equals(ins.getCpfProfessor()) && ins.getCodigoDisciplina().equals((String) comboBoxDisciplina.getSelectedItem())) {
 			        boolean jaAdicionado = false;
 			        for (int k = 0; k < professoresInscritos.size(); k++) {
 			            if (professoresInscritos.get(k).getCpf().equals(prof.getCpf())) {

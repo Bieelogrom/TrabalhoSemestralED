@@ -65,7 +65,7 @@ public class PainelConsulta extends JPanel implements IPainelConsulta {
 		scrollPane.setViewportView(table);
 		
 		this.disciplinaController = new DisciplinaController();
-		this.consultarController = new ConsultaController(tableModel);
+		this.consultarController = new ConsultaController(tableModel, comboBoxDisciplina);
 		
 		btnConsultar.addActionListener(consultarController);
 	}
